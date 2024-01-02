@@ -4,10 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 
 class Room extends Model
 {
     protected $table = 'rooms';
+
+    public function getCreatedAtColumn()
+    {
+        return 'id';
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(AvailableTags::class, 'room_tags', 'room_id', 'tag_id');
+    }
 
     public static function getTags($id): array
     {
@@ -37,5 +48,55 @@ class Room extends Model
             "average" => $count > 0 ? $sum / $count : 0,
             "count" => $count
         ];
+    }
+
+    public function scopeFilter($query, $filter)
+    {
+        if (isset($filter['tag'])) {
+            $query->join('room_tags', 'rooms.id', '=', 'room_tags.room_id')
+                ->whereIn('room_tags.tag_id', $filter['tag'])
+                ->groupBy('rooms.id')
+                ->havingRaw('count(room_tags.tag_id) = ?', [count($filter['tag'])])
+                ->select('rooms.*', DB::raw('count(room_tags.tag_id) as tag_count'));
+        }
+
+//        if (isset($filter['date-from'])) {
+//            $query->where('date_from', '>=', $filter['date-from']);
+//        }
+//
+//        if (isset($filter['date-to'])) {
+//            $query->where('date_to', '<=', $filter['date-to']);
+//        }
+
+        if (isset($filter['people'])) {
+            $query->where('capacity', '=', $filter['people']);
+        }
+
+        if (isset($filter['min-price'])) {
+            $query->where('price', '>=', $filter['min-price']);
+        }
+
+        if (isset($filter['max-price'])) {
+            $query->where('price', '<=', $filter['max-price']);
+        }
+
+        if (isset($filter['distance']) && $filter['distance'] > 0) {
+            $query->where('distance', '<=', $filter['distance']);
+        }
+
+        if (isset($filter['sort'])) {
+            $arr = explode(':', $filter['sort']);
+            if (count($arr) != 2) {
+                return $query;
+            }
+            $arr[1] = strtolower($arr[1]) == 'asc' ? 'asc' : 'desc';
+            if (!in_array($arr[0], ['price', 'distance', 'area'])) {
+                return $query;
+            }
+
+            $query->orderBy($arr[0], $arr[1]);
+        }
+
+        return $query;
     }
 }

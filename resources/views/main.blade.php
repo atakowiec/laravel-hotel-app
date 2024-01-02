@@ -3,28 +3,36 @@
     use App\Models\RoomTags;
     use App\Models\AvailableTags;
 
-    $rooms = Room::all();
-
     $max_price = ceil(Room::max('price'));
     $min_price = floor(Room::min('price'));
 
-    $tags = AvailableTags::all();
-    $tagsCounts = RoomTags::getTagsCount($rooms);
+    $args = [
+        'date-from' => ['regex' => '/^\d{4}-\d{2}-\d{2}$/'],
+        'date-to' => ['regex' => '/^\d{4}-\d{2}-\d{2}$/'],
+        'people' => FILTER_SANITIZE_NUMBER_INT,
+        'min-price' => FILTER_SANITIZE_NUMBER_INT,
+        'max-price' => FILTER_SANITIZE_NUMBER_INT,
+        'distance' => FILTER_SANITIZE_NUMBER_INT,
+        'tag' => ['filter' => FILTER_SANITIZE_NUMBER_INT, 'flags' => FILTER_REQUIRE_ARRAY],
+        'sort' => ['regex' => '/^(price|distance|area):(asc|desc)$/']
+    ];
 
-    $tags = $tags->map(function ($tag) use ($tagsCounts) {
-        $tag->count = $tagsCounts[$tag->name] ?? 0;
-        return $tag;
-    });
+    // filter input data, just skip invalid values
+    $data = filter_input_array(INPUT_GET, $args);
 
-    $tags = $tags->sortByDesc('count');
-
-    $tags = $tags->values()->all();
+    // set default values
+    $data['date-from'] = $data['date-from'] ?? date('Y-m-d');
+    $data['date-to'] = $data['date-to'] ?? date('Y-m-d', strtotime('+1 day'));
+    $data['people'] = $data['people'] ?? 1;
+    $data['min-price'] = $data['min-price'] ?? $min_price;
+    $data['max-price'] = $data['max-price'] ?? $max_price;
+    $data['distance'] = $data['distance'] ?? "-1";
+    $data['tag'] = $data['tag'] ?? [];
+    $data['sort'] = $data['sort'] ?? "price:desc";
 @endphp
 @section('title', "Strona głowna")
 
 @vite(["/resources/sass/main.scss"])
-
-{{--todo filter based on get data--}}
 
 @extends('layout')
 
@@ -38,96 +46,45 @@
         }
     </script>
     <div class="main row mx-auto col-12 col-md-9">
-        <form class="col-3 filters">
-            <h3>Termin</h3>
-            <div class="box">
-                <label>
-                    <span>Od</span>
-                    <input type="date" name="date-from">
-                </label>
-                <label>
-                    <span>Do</span>
-                    <input type="date" name="date-to">
-                </label>
-            </div>
-            <h3 class="mt-4">Filtrowanie</h3>
-            <div class="box">
-                <h5>Liczba osób</h5>
-                <label>
-                    <input type="number" min="1" max="10" name="people">
-                </label>
-            </div>
-            <div class="box">
-                <h5>Cena</h5>
-                <div class="price">
-                    <input type="number" min="{{ $min_price }}" max="{{ $max_price }}" placeholder="od"
-                           value="{{$min_price}}" name="min-price">
-                    <span> - </span>
-                    <input type="number" min="{{ $min_price }}" max="{{ $max_price }}" placeholder="do"
-                           value="{{$max_price}}" name="max-price">
+        <form class="row col-12">
+            <x-filters-box :data="$data" :rooms="$rooms"/>
+            <div class="col-8">
+                <div class="search-result-header-box">
+                    <h3>Wyniki wyszukiwania</h3>
+                    <div>
+                        <label>
+                            <select name="sort">
+                                <option value="price:desc" {{ $data["sort"] === "price:desc" ? "selected" : "" }}>
+                                    Cena - malejąco
+                                </option>
+                                <option value="price:asc" {{ $data["sort"] === "price:asc" ? "selected" : "" }}>
+                                    Cena - rosnąco
+                                </option>
+                                <option value="distance:desc" {{ $data["sort"] === "distance:desc" ? "selected" : "" }}>
+                                    Odległość - malejąco
+                                </option>
+                                <option value="distance:asc" {{ $data["sort"] === "distance:asc" ? "selected" : "" }}>
+                                    Odległość - rosnąco
+                                </option>
+                                <option value="area:desc" {{ $data["sort"] === "area:desc" ? "selected" : "" }}>
+                                    Wielkość - malejąco
+                                </option>
+                                <option value="area:asc" {{ $data["sort"] === "area:asc" ? "selected" : "" }}>
+                                    Wielkość - rosnąco
+                                </option>
+                            </select>
+                        </label>
+                        <button class="submit" type="submit">Sortuj</button>
+                    </div>
+                </div>
+                <div class="search-result-box">
+                    <div class="rooms">
+                        @foreach($rooms as $room)
+                            <x-room-card :room="$room"/>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-            <div class="box">
-                <h5>Odległość</h5>
-                <label>
-                    <input type="radio" name="distance" value="20">
-                    <span>poniżej 20m</span>
-                </label>
-                <label>
-                    <input type="radio" name="distance" value="50">
-                    <span>poniżej 50m</span>
-                </label>
-                <label>
-                    <input type="radio" name="distance" value="100">
-                    <span>poniżej 100m</span>
-                </label>
-                <label>
-                    <input type="radio" name="distance" value="200">
-                    <span>poniżej 200m</span>
-                </label>
-                <label>
-                    <input type="radio" name="distance" value="100000000" checked>
-                    <span>bez znaczenia</span>
-                </label>
-            </div>
-            <div class="box">
-                <h5>Udogodnienia</h5>
-                <div>
-                    @php($i = 0)
-                    @foreach($tags as $tag)
-                        @php($i++)
-                        @if($i == 20)
-                </div>
-                <h3 onclick="show()" id="button-to-hide">
-                    Pokaż pozostałe ({{ count($tags) - $i + 1 }})
-                </h3>
-                <div id="rest-to-show" class="d-none">
-                    @endif
-                    <label class="{{$tag->count == 0 ? "inactive" : ""}}">
-                        <input type="checkbox" name="tag[]" value="{{ $tag->id }}">
-                        <span>{{ $tag->name }} ({{ $tag->count }})</span>
-                    </label>
-                    @endforeach
-                </div>
-            </div>
-            <button type="submit">Szukaj</button>
         </form>
-        <div class="col-8">
-            <div class="search-result-header-box">
-                <h3>Wyniki wyszukiwania</h3>
-                <select name="sort">
-                    <option value="price">Cena - malejąco</option>
-                    <option value="price">Cena - rosnąco</option>
-                    <option value="distance">Odległość - malejąco</option>
-                    <option value="distance">Odległość - rosnąco</option>
-                </select>
-            </div>
-            <div class="search-result-box">
-                <div class="rooms">
-                    @foreach($rooms as $room)
-                        <x-room-card :room="$room"/>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+    </div>
 @endsection

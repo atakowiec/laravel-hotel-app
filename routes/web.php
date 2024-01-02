@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('main');
-});
+Route::get('/', [RoomController::class, 'index']);
+
+Route::get('/room/{id}', [RoomController::class, 'show']);
 
 Route::get('/login', function () {
     return view('login');
@@ -16,8 +17,4 @@ Route::get('/register', function () {
 
 Route::get('/profile', function () {
     return view('profile');
-});
-
-Route::get('/room/{id}', function ($id) {
-    return view('room', ['id' => $id]);
 });

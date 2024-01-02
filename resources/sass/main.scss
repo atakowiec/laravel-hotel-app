@@ -4,6 +4,16 @@
     margin-bottom: 50px;
     padding-top: 50px;
 
+    .submit {
+        background-color: #ff5a5f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 6px 25px;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
     .filters {
         h3 {
             text-align: center;
@@ -13,6 +23,7 @@
         #button-to-hide {
             margin-top: 10px;
             cursor: pointer;
+            text-align: center;
 
             &:hover {
                 text-decoration: underline;
@@ -171,16 +182,23 @@
                 color: #ff5a5f;
                 margin: 5px 10px;
 
-                button {
-                    width: 110px;
-                    padding: 8px 10px;
-                    border: none;
-                    border-radius: 5px;
-                    background-color: #ff5a5f;
-                    color: white;
-                    font-weight: bold;
-                    font-size: 1rem;
-                    margin-bottom: 5px;
+                a {
+                    text-decoration: none;
+
+                    .button {
+                        width: 110px;
+                        padding: 8px 10px;
+                        border: none;
+                        border-radius: 5px;
+                        background-color: #ff5a5f;
+                        color: white;
+                        font-weight: bold;
+                        font-size: 1rem;
+                        margin-bottom: 5px;
+                        cursor: pointer;
+                        text-decoration: none;
+                        text-align: center;
+                    }
                 }
             }
         }

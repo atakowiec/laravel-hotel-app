@@ -1,5 +1,5 @@
 @extends('layout')
 
 @section("content")
-    {{$id}}
+    {{$room->id}}
 @endsection

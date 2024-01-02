@@ -20,7 +20,7 @@
                 </div>
                 <div class="capacity">
                     <span>Dla {{ $room->capacity }} {{ $room->capacity == 1 ? "osoby" : "osób" }},</span>
-                    <span>{{ $room->size }}m<sup>2</sup></span>
+                    <span>{{ $room->area }}m<sup>2</sup></span>
                 </div>
                 <div class="location">
                     Lokalizacja: x={{ $room->x_pos }}, y={{ $room->z_pos }} ({{ number_format($room->distance) }}m. od wejścia)
@@ -42,9 +42,9 @@
         </div>
         <div class="price">
             <a href="/room/{{ $room->id }}">
-                <button role="button">
+                <div class="button">
                     Szczególy
-                </button>
+                </div>
             </a>
             <span>{{ number_format($room->price, 2) }} zł / noc</span>
         </div>
