@@ -10,12 +10,12 @@ class Room extends Model
 {
     protected $table = 'rooms';
 
-    public function getCreatedAtColumn()
+    public function getCreatedAtColumn(): string
     {
         return 'id';
     }
 
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(AvailableTags::class, 'room_tags', 'room_id', 'tag_id');
     }
@@ -52,7 +52,7 @@ class Room extends Model
 
     public function scopeFilter($query, $filter)
     {
-        if (isset($filter['tag'])) {
+        if (isset($filter['tag']) && count($filter['tag']) > 0) {
             $query->join('room_tags', 'rooms.id', '=', 'room_tags.room_id')
                 ->whereIn('room_tags.tag_id', $filter['tag'])
                 ->groupBy('rooms.id')
@@ -60,15 +60,7 @@ class Room extends Model
                 ->select('rooms.*', DB::raw('count(room_tags.tag_id) as tag_count'));
         }
 
-//        if (isset($filter['date-from'])) {
-//            $query->where('date_from', '>=', $filter['date-from']);
-//        }
-//
-//        if (isset($filter['date-to'])) {
-//            $query->where('date_to', '<=', $filter['date-to']);
-//        }
-
-        if (isset($filter['people'])) {
+        if (!empty($filter['people'])) {
             $query->where('capacity', '=', $filter['people']);
         }
 
@@ -90,11 +82,9 @@ class Room extends Model
                 return $query;
             }
             $arr[1] = strtolower($arr[1]) == 'asc' ? 'asc' : 'desc';
-            if (!in_array($arr[0], ['price', 'distance', 'area'])) {
-                return $query;
-            }
 
-            $query->orderBy($arr[0], $arr[1]);
+            if (in_array($arr[0], ['price', 'distance', 'area']))
+                $query->orderBy($arr[0], $arr[1]);
         }
 
         return $query;

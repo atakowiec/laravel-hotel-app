@@ -38,3 +38,30 @@ body {
         margin-left: 5px;
     }
 }
+
+.loading-animation {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    animation: spin 1s ease-in-out infinite;
+
+    img {
+        width: 50px;
+
+        &.lg {
+            width: 100px;
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+}

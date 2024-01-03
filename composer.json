@@ -1,16 +1,22 @@
 {
-    "name": "laravel/laravel",
+    "name": "laravel/hotel-app",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Room booking and hotel management app",
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "ext-pdo": "*",
         "guzzlehttp/guzzle": "^7.2",
+        "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "laravel/ui": "^4.3"
+        "laravel/ui": "^4.3",
+        "livewire/livewire": "^2.12"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

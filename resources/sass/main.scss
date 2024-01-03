@@ -110,6 +110,22 @@
         }
     }
 
+    .no-data-box {
+        padding: 10px;
+        margin-bottom: 20px;
+        background-color: rgba(0, 0, 0, 0.04);
+        border-radius: 13px;
+        text-align: center;
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+    }
+
     .room-card {
         padding: 10px;
         display: flex;

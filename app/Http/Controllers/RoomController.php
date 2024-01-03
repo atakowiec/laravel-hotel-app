@@ -7,17 +7,15 @@ use App\Models\Room;
 class RoomController extends Controller
 {
 
-    public function __construct(
-        private Room $model
-    )
+    public function __construct()
     {
     }
 
-    private static array $filters = ['tag', 'date-from', 'date-to', 'people', 'min-price', 'max-price', 'distance', 'sort'];
+    public static array $filters = ['tag', 'date-from', 'date-to', 'people', 'min-price', 'max-price', 'distance', 'sort'];
 
     public function index()
     {
-        return view('main', ["rooms" => $this->model->filter(request(RoomController::$filters))->get()]);
+        return view('main');
     }
 
     public function show($room_id)
