@@ -59,6 +59,9 @@
             <label>
                 <input type="number" min="1" max="10" name="people" wire:model.debounce.200ms="people">
             </label>
+            @error('people')
+            <span class="error">Nieprawidłowa wartość</span>
+            @enderror
         </div>
         <div class="box">
             <h5>Cena</h5>
@@ -78,6 +81,12 @@
                            wire:model.debounce.200ms="maxPrice"
                            name="max-price">
                 </label>
+                @error('minPrice')
+                <div class="error">Nieprawidłowa wartość minimalna</div>
+                @enderror
+                @error('maxPrice')
+                <div class="error">Nieprawidłowa wartość maksymalna</div>
+                @enderror
             </div>
         </div>
         <div class="box">

@@ -25,6 +25,21 @@ class RoomList extends Component
         "sort" => ["except" => "price:asc"],
     ];
 
+    protected function rules()
+    {
+        return [
+            "tag" => ["array"],
+            "tag.*" => ["integer"],
+            "dateFrom" => ["date"],
+            "dateTo" => ["date"],
+            "people" => ["integer", "min:1"],
+            "minPrice" => ["integer", "min:0"],
+            "maxPrice" => ["integer", "min:0"],
+            "distance" => ["integer", "min:-1"],
+            "sort" => ["string", "in:price:asc,price:desc,stars:asc,stars:desc"],
+        ];
+    }
+
     public array $tag = [];
     public string $dateFrom;
     public string $dateTo;
@@ -74,6 +89,8 @@ class RoomList extends Component
 
     public function reloadData(): void
     {
+        $this->validate();
+
         $this->rooms = $this->model->filter($this->getDataArray())->get();
     }
 
