@@ -6,6 +6,7 @@ use App\Models\AvailableTags;
 use App\Models\Room;
 use App\Models\RoomTags;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -18,7 +19,9 @@ class RoomList extends Component
         "tag.*.integer" => "Niepoprawny tag",
         "dateFrom.date" => "Niepoprawna data",
         "dateTo.date" => "Niepoprawna data",
-        "dateFrom.before_or_equal" => "Niepoprawny przedział dat",
+        "dateTo.after" => "Wybierz daty w przyszłości",
+        "dateFrom.before" => "Niepoprawny przedział dat",
+        "dateFrom.after" => "Wybierz daty w przyszłości",
         "people.integer" => "Niepoprawna liczba osób",
         "people.min" => "Niepoprawna liczba osób",
         "minPrice.integer" => "Niepoprawna cena minimalna",
@@ -44,13 +47,13 @@ class RoomList extends Component
         return [
             "tag" => ["array"],
             "tag.*" => ["integer"],
-            "dateFrom" => ["date", "before_or_equal:dateTo", "after:yesterday"],
+            "dateFrom" => ["date", "before:dateTo", "after:yesterday"],
             "dateTo" => ["date", "after:yesterday"],
             "people" => ["integer", "min:1"],
             "minPrice" => ["integer", "min:0"],
             "maxPrice" => ["integer", "min:0", "gte:minPrice"],
             "distance" => ["integer", "min:-1"],
-            "sort" => ["string", "in:price:asc,price:desc,distance:asc,distance:desc,area:asc,area:desc"],
+            "sort" => ["string", "in:price:asc,price:desc,distance:asc,distance:desc,area:asc,area:desc,reservations:asc,reservations:desc"],
         ];
     }
 
@@ -76,14 +79,11 @@ class RoomList extends Component
 
     public function mount(): void
     {
-        $this->rooms = $this->model->filter($this->getDataArray())->get();
+        $this->reloadData();
 
         // initially save dateFrom and dateTo in session
         $this->updatedDateFrom();
         $this->updatedDateTo();
-
-        // validate initial data
-        $this->validate();
     }
 
     public function getDataArray(): array
@@ -114,7 +114,13 @@ class RoomList extends Component
     {
         $this->validate();
 
-        $this->rooms = $this->model->filter($this->getDataArray())->get();
+        $this->rooms = $this->model
+            ->select('rooms.*')
+            ->addSelect(DB::raw('count(reservations.id) as reservations'))
+            ->leftJoin('reservations', 'rooms.id', '=', 'reservations.room_id')
+            ->filter($this->getDataArray())
+            ->groupBy('rooms.id')
+            ->get();
     }
 
     public function updated(): void

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
 class Room extends Model
@@ -19,6 +20,11 @@ class Room extends Model
     {
         return $this->belongsToMany(AvailableTags::class, 'room_tags', 'room_id', 'tag_id');
     }
+
+//    public function reservations(): HasMany
+//    {
+//        return $this->hasMany(Reservation::class);
+//    }
 
     public static function getTags($id): array
     {
@@ -52,12 +58,35 @@ class Room extends Model
 
     public function scopeFilter($query, $filter)
     {
+        if (isset($filter['dateFrom']) && isset($filter['dateTo'])) {
+            $query->selectRaw('
+                IF (((
+                    (reservations.date_from > ? AND reservations.date_from < ?) OR
+                    (reservations.date_to > ? AND reservations.date_to < ?) OR
+                    (reservations.date_from < ? AND reservations.date_to > ?) OR
+                    (reservations.date_from = ? AND reservations.date_to = ?)
+                ) AND reservations.id IS NOT NULL), 0, 1)
+                AS available',
+                [
+                    $filter['dateFrom'],
+                    $filter['dateTo'],
+                    $filter['dateFrom'],
+                    $filter['dateTo'],
+                    $filter['dateFrom'],
+                    $filter['dateTo'],
+                    $filter['dateFrom'],
+                    $filter['dateTo'],
+                ]
+            )
+                ->groupBy('rooms.id');
+        }
+
         if (isset($filter['tag']) && count($filter['tag']) > 0) {
             $query->join('room_tags', 'rooms.id', '=', 'room_tags.room_id')
                 ->whereIn('room_tags.tag_id', $filter['tag'])
                 ->groupBy('rooms.id')
                 ->havingRaw('count(room_tags.tag_id) = ?', [count($filter['tag'])])
-                ->select('rooms.*', DB::raw('count(room_tags.tag_id) as tag_count'));
+                ->addSelect(DB::raw('count(room_tags.tag_id) as tag_count'));
         }
 
         if (!empty($filter['people'])) {
@@ -83,8 +112,9 @@ class Room extends Model
             }
             $arr[1] = strtolower($arr[1]) == 'asc' ? 'asc' : 'desc';
 
-            if (in_array($arr[0], ['price', 'distance', 'area']))
+            if (in_array($arr[0], ['price', 'distance', 'area', 'reservations'])) {
                 $query->orderBy($arr[0], $arr[1]);
+            }
         }
 
         return $query;

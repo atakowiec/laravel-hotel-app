@@ -1,3 +1,9 @@
+@section("title", $room->name)
+
+@push("css")
+    @vite("resources/sass/room.scss")
+@endpush
+
 <div class="row col-12 col-md-10 col-xxl-8 mx-auto room-box">
     <div class="col-12 info-box">
         <div class="info">

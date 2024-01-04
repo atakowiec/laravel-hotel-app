@@ -14,11 +14,11 @@ class RoomController extends Controller
 
     public function index()
     {
-        return view('main');
+        return $this->livewire_nav_view("room-list");
     }
 
     public function show($room_id)
     {
-        return view('room', ['room' => Room::findOrFail($room_id)]);
+        return $this->livewire_nav_view('room-page', ['room' => Room::findOrFail($room_id)]);
     }
 }
