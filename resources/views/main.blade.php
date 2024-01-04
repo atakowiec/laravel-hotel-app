@@ -8,6 +8,6 @@
 
 @section('content')
     <div class="main row mx-auto col-12 col-md-9">
-        @livewire('main.room-list')
+        @livewire('room-list')
     </div>
 @endsection

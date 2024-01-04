@@ -9,9 +9,8 @@ class RoomController extends Controller
 
     public function __construct()
     {
+        // empty
     }
-
-    public static array $filters = ['tag', 'date-from', 'date-to', 'people', 'min-price', 'max-price', 'distance', 'sort'];
 
     public function index()
     {

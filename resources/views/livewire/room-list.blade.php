@@ -1,39 +1,6 @@
 @php
-    //    use App\Models\Room;
-    //    use App\Models\RoomTags;
-    //    use App\Models\AvailableTags;
-    //
-    //    $max_price = ceil(Room::max('price'));
-    //    $min_price = floor(Room::min('price'));
-
-    //    $args = [
-    //        'date-from' => ['regex' => '/^\d{4}-\d{2}-\d{2}$/'],
-    //        'date-to' => ['regex' => '/^\d{4}-\d{2}-\d{2}$/'],
-    //        'people' => FILTER_SANITIZE_NUMBER_INT,
-    //        'min-price' => FILTER_SANITIZE_NUMBER_INT,
-    //        'max-price' => FILTER_SANITIZE_NUMBER_INT,
-    //        'distance' => FILTER_SANITIZE_NUMBER_INT,
-    //        'tag' => ['filter' => FILTER_SANITIZE_NUMBER_INT, 'flags' => FILTER_REQUIRE_ARRAY],
-    //        'sort' => ['regex' => '/^(price|distance|area):(asc|desc)$/']
-    //    ];
-    //
-    //    // filter input data, just skip invalid values
-    //    $data = filter_input_array(INPUT_GET, $args);
-    //
-    //    // set default values
-    //    $data['date-from'] = $data['date-from'] ?? date('Y-m-d');
-    //    $data['date-to'] = $data['date-to'] ?? date('Y-m-d', strtotime('+1 day'));
-    //    $data['people'] = $data['people'] ?? "";
-    //    $data['min-price'] = $data['min-price'] ?? $min_price;
-    //    $data['max-price'] = $data['max-price'] ?? $max_price;
-    //    $data['distance'] = $data['distance'] ?? "-1";
-    //    $data['tag'] = $data['tag'] ?? [];
-    //    $data['sort'] = $data['sort'] ?? "price:desc";
-
-    use App\Models\Room;
-
-    $max_price = ceil(Room::max('price'));
-    $min_price = floor(Room::min('price'));
+    $max_price = ceil($this->model->max('price'));
+    $min_price = floor($this->model->min('price'));
 @endphp
 
 <form class="row col-12">
@@ -52,6 +19,9 @@
                        name="date-to"
                        wire:model="dateTo">
             </label>
+            @error('dateFrom')
+            <span class="error">{{ $message }}</span>
+            @enderror
         </div>
         <h3 class="mt-4">Filtrowanie</h3>
         <div class="box">
@@ -60,7 +30,7 @@
                 <input type="number" min="1" max="10" name="people" wire:model.debounce.200ms="people">
             </label>
             @error('people')
-            <span class="error">Nieprawidłowa wartość</span>
+            <span class="error">{{ $message }}</span>
             @enderror
         </div>
         <div class="box">
@@ -82,10 +52,10 @@
                            name="max-price">
                 </label>
                 @error('minPrice')
-                <div class="error">Nieprawidłowa wartość minimalna</div>
+                <div class="error">{{ $message }}</div>
                 @enderror
                 @error('maxPrice')
-                <div class="error">Nieprawidłowa wartość maksymalna</div>
+                <div class="error">{{ $message }}</div>
                 @enderror
             </div>
         </div>
@@ -132,6 +102,8 @@
                 @endif
                 <label class="{{$tag->count == 0 ? "inactive" : ""}}">
                     <input type="checkbox" name="tag[]"
+                           value="{{ $tag->id }}"
+                           {{ in_array($tag->id, $this->tag) ? "checked" : ""}}
                            wire:change="setTag({{ $tag->id }}, $event.target.checked)">
                     <span>{{ $tag->name }} ({{ $tag->count }})</span>
                 </label>

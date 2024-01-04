@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Main;
+namespace App\Http\Livewire;
 
 use App\Models\AvailableTags;
 use App\Models\Room;
@@ -14,6 +14,20 @@ class RoomList extends Component
     public Room $model;
     public Collection $rooms;
 
+    protected $messages = [
+        "tag.*.integer" => "Niepoprawny tag",
+        "dateFrom.date" => "Niepoprawna data",
+        "dateTo.date" => "Niepoprawna data",
+        "dateFrom.before_or_equal" => "Niepoprawny przedział dat",
+        "people.integer" => "Niepoprawna liczba osób",
+        "people.min" => "Niepoprawna liczba osób",
+        "minPrice.integer" => "Niepoprawna cena minimalna",
+        "minPrice.min" => "Niepoprawna cena minimalna",
+        "maxPrice.integer" => "Niepoprawna cena maksymalna",
+        "maxPrice.min" => "Niepoprawna cena maksymalna",
+        "maxPrice.gte" => "Niepoprawny przedział cenowy",
+    ];
+
     protected $queryString = [
         "tag" => ["except" => []],
         "dateFrom" => ["except" => ""],
@@ -25,18 +39,18 @@ class RoomList extends Component
         "sort" => ["except" => "price:asc"],
     ];
 
-    protected function rules()
+    protected function rules(): array
     {
         return [
             "tag" => ["array"],
             "tag.*" => ["integer"],
-            "dateFrom" => ["date"],
-            "dateTo" => ["date"],
+            "dateFrom" => ["date", "before_or_equal:dateTo", "after:yesterday"],
+            "dateTo" => ["date", "after:yesterday"],
             "people" => ["integer", "min:1"],
             "minPrice" => ["integer", "min:0"],
-            "maxPrice" => ["integer", "min:0"],
+            "maxPrice" => ["integer", "min:0", "gte:minPrice"],
             "distance" => ["integer", "min:-1"],
-            "sort" => ["string", "in:price:asc,price:desc,stars:asc,stars:desc"],
+            "sort" => ["string", "in:price:asc,price:desc,distance:asc,distance:desc,area:asc,area:desc"],
         ];
     }
 
@@ -58,8 +72,18 @@ class RoomList extends Component
         $this->dateTo = date("Y-m-d", strtotime("+1 day"));
         $this->minPrice = floor($this->model->min("price"));
         $this->maxPrice = ceil($this->model->max("price"));
+    }
 
+    public function mount(): void
+    {
         $this->rooms = $this->model->filter($this->getDataArray())->get();
+
+        // initially save dateFrom and dateTo in session
+        $this->updatedDateFrom();
+        $this->updatedDateTo();
+
+        // validate initial data
+        $this->validate();
     }
 
     public function getDataArray(): array
@@ -83,7 +107,6 @@ class RoomList extends Component
         else
             $this->tag = array_diff($this->tag, [$id]);
 
-        error_log(json_encode($this->tag));
         $this->reloadData();
     }
 
@@ -112,8 +135,18 @@ class RoomList extends Component
         return $tags->values()->all();
     }
 
+    public function updatedDateFrom(): void
+    {
+        request()->session()->put("dateFrom", $this->dateFrom);
+    }
+
+    public function updatedDateTo(): void
+    {
+        request()->session()->put("dateTo", $this->dateTo);
+    }
+
     public function render(): View
     {
-        return view('livewire.main.room-list');
+        return view('livewire.room-list');
     }
 }
