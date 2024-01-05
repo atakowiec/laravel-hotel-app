@@ -2,6 +2,6 @@
 
 @extends("layouts.app")
 
-@section('content')
+@section('page')
     @livewire($liveWireComponent, $params)
 @endsection

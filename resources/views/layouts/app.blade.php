@@ -11,10 +11,10 @@
             crossorigin="anonymous"></script>
     @livewireStyles
 
+    @vite(['resources/sass/app.scss'])
+
     @stack('css')
     @stack('other-scripts')
-
-    @vite(['resources/sass/app.scss'])
 </head>
 <body>
 @yield('page')

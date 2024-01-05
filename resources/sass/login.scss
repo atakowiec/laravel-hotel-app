@@ -1,0 +1,95 @@
+.login-box {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 60px auto 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+
+    h1 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .bottom-buttons-box,
+    .top-buttons-box {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        a {
+            display: flex;
+            align-items: center;
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all .1s ease-in-out;
+            border-bottom: 2px solid transparent;
+
+            img {
+                width: 20px;
+            }
+
+            &:hover {
+                color: #000;
+                border-bottom: 2px solid #000;
+            }
+        }
+    }
+
+    .bottom-buttons-box {
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .input-box {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        input:not([type="checkbox"]) {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            transition: all .3s ease-in-out;
+
+            &.is-invalid {
+                border-color: #f00 !important;
+            }
+
+            &:focus {
+                border-color: #000;
+            }
+        }
+    }
+
+    button {
+        width: 100%;
+        border: 0;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        background-color: #ff5a5f;
+        color: #fff;
+        transition: all .1s ease-in-out;
+
+        &:hover {
+            background-color: #e44b4f;
+        }
+
+        &.disabled {
+            background-color: #ddd;
+            color: #aaa;
+        }
+    }
+}
