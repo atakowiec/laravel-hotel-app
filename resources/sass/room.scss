@@ -21,7 +21,7 @@
         }
 
         .room-image {
-            height: 600px;
+            height: 500px;
             width: 100%;
             object-fit: cover;
             object-position: center;
@@ -31,6 +31,16 @@
         .book-box {
             background-color: #ff5a5f;
             border-radius: 10px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+
+            .error {
+                color: #fff;
+                font-weight: bold;
+                text-align: center;
+            }
 
             .price {
                 color: #fff;
@@ -47,15 +57,19 @@
                 color: #ff5a5f;
                 cursor: pointer;
                 font-weight: bold;
-                margin: 20px auto;
                 padding: 10px 20px;
                 width: 100%;
+
+                &:disabled {
+                    background-color: #dfdfdf;
+                    color: #aaa;
+                }
             }
 
             h4 {
                 color: #fff;
                 font-weight: bold;
-                margin-top: 20px;
+                margin-top: 10px;
                 text-align: center;
                 margin-bottom: 30px;
             }

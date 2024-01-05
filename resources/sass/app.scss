@@ -56,6 +56,10 @@ body {
     img {
         width: 50px;
 
+        &.sm {
+            width: 24px;
+        }
+
         &.lg {
             width: 100px;
         }
