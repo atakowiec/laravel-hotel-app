@@ -31,7 +31,7 @@
         .box {
             padding: 10px;
             margin-bottom: 20px;
-            background-color: rgba(0, 0, 0, 0.04);
+            background-color: rgba(0, 0, 0, 0.08);
             border-radius: 13px;
             display: flex;
             flex-direction: column;
@@ -111,7 +111,7 @@
     .no-data-box {
         padding: 10px;
         margin-bottom: 20px;
-        background-color: rgba(0, 0, 0, 0.04);
+        background-color: rgba(0, 0, 0, 0.08);
         border-radius: 13px;
         text-align: center;
 
@@ -128,7 +128,7 @@
         padding: 10px;
         display: flex;
         margin-bottom: 20px;
-        background-color: rgba(0, 0, 0, 0.04);
+        background-color: rgba(0, 0, 0, 0.08);
         border-radius: 13px;
         position: relative;
 
@@ -140,7 +140,7 @@
             height: 100%;
             border-radius: 13px;
             background-color: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             display: flex;
             justify-content: center;
             align-items: center;

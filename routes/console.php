@@ -46,6 +46,5 @@ Artisan::command('make:scss {name}', function () {
         $this->error('File already exists!');
         return;
     }
-    file_put_contents($path, "@import '${returnDots}base';\n\n// Your code here :)\n");
-    $this->info('File created successfully!');
+    $this->info('File created: ' . $path);
 })->purpose('Create new scss file in resources/sass');
