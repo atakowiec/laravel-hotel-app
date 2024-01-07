@@ -11,10 +11,8 @@ class RoomPage extends Component
 {
     public Room $room;
     public array $tags = [];
-
     public string $dateFrom = '';
     public string $dateTo = '';
-
     public bool $available = false;
     public float $totalPrice = 0;
 
@@ -65,7 +63,6 @@ class RoomPage extends Component
         $this->available = count($reservations) == 0;
     }
 
-    // on date change
     public function updateTotalPrice(): void
     {
         // days between dateFrom and dateTo (including) times price

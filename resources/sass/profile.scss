@@ -1,9 +1,89 @@
 .profile-box {
+    .change-password-box {
+        padding: 20px;
+        border-radius: 10px;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .button-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+
+            button {
+                border: none;
+                outline: none;
+                font-size: 1rem;
+                background-color: #ff5a5f;
+                color: #fff;
+                border-radius: 10px;
+                transition: background-color 0.1s ease-in-out;
+                padding: 10px 20px;
+
+                &:hover {
+                    background-color: #ff7b7f;
+                }
+            }
+        }
+
+        .input-box {
+            margin-top: 20px;
+
+            label {
+                font-size: 1rem;
+                color: #333;
+                font-weight: bold;
+            }
+
+            input {
+                border: none;
+                outline: none;
+                background-color: rgba(0, 0, 0, 0.08);
+                border-radius: 10px;
+                padding: 10px;
+                margin-top: 5px;
+                width: 100%;
+                font-size: 1rem;
+                color: #333;
+            }
+        }
+    }
+
     .left-panel {
+        margin-top: 36px;
         padding: 20px;
         background-color: rgba(0, 0, 0, 0.08);
         border-radius: 10px;
-        min-height: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        button {
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background-color: #ff5a5f;
+            color: #fff;
+            border-radius: 10px;
+            transition: background-color 0.1s ease-in-out;
+            width: 100%;
+            padding: 10px 0;
+            margin-top: 20px;
+
+            &:hover {
+                background-color: #ff7b7f;
+            }
+        }
 
         .avatar-box {
             text-align: center;
@@ -48,43 +128,77 @@
     }
 
     .reservations-box {
-        border-radius: 10px;
+        padding-left: 20px;
 
-        .content-box {
-            min-height: 100%;
-            background-color: rgba(0, 0, 0, 0.08);
-            border-radius: 0 0 10px 10px;
-            padding: 20px;
+        h2 {
+            margin-bottom: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+
+            &:not(:first-child) {
+                margin-top: 20px;
+            }
         }
 
-        .top-buttons-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .reservation-card {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.08);
+            margin-bottom: 10px;
 
-            button {
-                flex: 1;
-                border: none;
-                padding: 20px 0;
-                font-size: 1rem;
-                background-color: rgba(0, 0, 0, 0.12);
-                transition: background-color 0.1s ease-in-out;
+            &:last-child {
+                margin-bottom: 40px;
+            }
 
-                &:first-child {
-                    border-top-left-radius: 10px;
-                }
+            .right-box {
+                text-align: right;
 
-                &:last-child {
-                    border-top-right-radius: 10px;
-                }
-
-                &:hover:not(.active) {
-                    background-color: rgba(0, 0, 0, 0.2);
-                }
-
-                &.active {
+                button {
+                    border: none;
+                    outline: none;
+                    font-size: 1rem;
                     background-color: #ff5a5f;
                     color: #fff;
+                    border-radius: 10px;
+                    transition: background-color 0.1s ease-in-out;
+                    padding: 5px 15px;
+
+                    &:hover {
+                        background-color: #ff7b7f;
+                    }
+                }
+            }
+
+            .info {
+                h5 {
+                    margin-bottom: 5px;
+                    font-size: 1.3rem;
+                    font-weight: bold;
+                    color: #333;
+
+                    .id {
+                        font-size: 0.8rem;
+                        color: #888;
+                        font-weight: normal;
+                    }
+                }
+
+                .date, .price {
+                    font-size: 1rem;
+                    color: #888;
+                }
+            }
+
+            .room-image {
+                padding: 0;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 6px;
+                    object-position: center;
                 }
             }
         }

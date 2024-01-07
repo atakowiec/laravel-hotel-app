@@ -14,9 +14,9 @@
     @vite(['resources/sass/app.scss'])
 
     @stack('css')
-    @stack('other-scripts')
 </head>
 <body>
 @yield('page')
+@stack('other-scripts')
 @livewireScripts
 </body>

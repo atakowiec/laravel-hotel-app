@@ -10,6 +10,42 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
+.floating-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    &.show {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.3);
+    }
+}
+
 .navbar {
     padding-top: 0;
     margin-bottom: 40px;
@@ -74,5 +110,6 @@ body {
             transform: rotate(360deg);
         }
     }
-
 }
+
+
