@@ -60,6 +60,33 @@ body {
             margin-right: 5px;
         }
     }
+
+    .login-link {
+        background-color: #ff5a5f;
+        color: #fff;
+
+        &:hover {
+            background-color: #ff4449;
+        }
+    }
+
+    .register-link  {
+        margin-right: 5px;
+        background-color: #e6e6e6;
+        color: #333;
+
+        &:hover {
+            background-color: #d4d4d4;
+        }
+    }
+
+    .login-link, .register-link {
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.2s linear;
+    }
 }
 
 .rating-stars {

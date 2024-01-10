@@ -11,7 +11,9 @@
                 <img src="{{ asset("images/user.png") }}" alt="avatar" class="avatar">
             </div>
             <div class="info-box">
-                <div class="name">John Doe</div>
+                <div class="name">
+                    {{json_encode(auth()->user())}}
+                </div>
                 <h4>
                     Dane kontaktowe
                 </h4>

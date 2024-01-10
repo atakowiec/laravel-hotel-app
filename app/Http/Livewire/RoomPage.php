@@ -44,6 +44,20 @@ class RoomPage extends Component
         $this->updateTotalPrice();
     }
 
+    public function bookRoom()
+    {
+        $this->validate();
+
+        $reservation = Reservation::create([
+            'user_id' => auth()->user()->id,
+            'room_id' => $this->room->id,
+            'date_from' => $this->dateFrom,
+            'date_to' => $this->dateTo,
+            'total_cost' => $this->totalPrice,
+            'cancelled' => false
+        ]);
+    }
+
     public function updateAvailable(): void
     {
         $dateFrom = $this->dateFrom;

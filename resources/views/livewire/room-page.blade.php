@@ -48,7 +48,7 @@
                     <button wire:loading disabled class="submit">
                         <x-loading-animation size="sm"/>
                     </button>
-                    <button wire:loading.remove @if(!$valid || !$available) disabled @endif class="submit">
+                    <button wire:loading.remove wire:click="bookRoom()" @if(!$valid || !$available) disabled @endif class="submit">
                         @if($valid)
                             @if($available)
                                 Zarezerwuj za {{ $totalPrice }} zł

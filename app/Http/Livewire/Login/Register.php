@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Login;
 
+use App\Models\User;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -18,6 +19,7 @@ class Register extends Component
         'nickname.required' => 'Nazwa uzytkownika jest wymagane.',
         'nickname.min' => 'Nazwa uzytkownika musi mieć minimum :min znaki.',
         'nickname.max' => 'Nazwa uzytkownika może mieć maksymalnie :max znaków.',
+        'nickname.unique' => 'Nazwa uzytkownika jest już zajęty.',
         'email.required' => 'Email jest wymagany.',
         'email.email' => 'Email musi być poprawny.',
         'email.unique' => 'Email jest już zajęty.',
@@ -31,11 +33,11 @@ class Register extends Component
     ];
 
     protected array $rules = [
-        'nickname' => 'required|min:3|max:20',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|min:8',
-        'password_confirmation' => 'required|same:password',
-        'terms' => 'accepted',
+        'nickname' => ['required', 'min:3', 'max:20', 'unique:users'],
+        'email' => ['required', 'email', 'unique:users'],
+        'password' => ['required', 'min:8'],
+        'password_confirmation' => ['required', 'same:password'],
+        'terms' => ['accepted'],
     ];
 
     public function updated(string $propertyName): void
@@ -54,6 +56,17 @@ class Register extends Component
     public function register(): void
     {
         $this->validate();
+
+        $user = User::create([
+            "nickname" => $this->nickname,
+            "password" => bcrypt($this->password),
+            "email" => $this->email,
+            "permission" => 0
+        ]);
+
+        auth()->login($user);
+
+        redirect('/')->with("message", "Konto utworzone pomyślnie");
     }
 
     public function getErrorClass($field): string

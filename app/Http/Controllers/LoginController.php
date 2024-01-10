@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function __construct()
+
+    public function destroy()
     {
-        // empty
+        auth()->logout();
+        return redirect("/")->with(["message" => "Wylogowano pomyślnie"]);
     }
 
     public function index()

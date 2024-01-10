@@ -38,6 +38,11 @@
             </div>
             @enderror
         </div>
+        @error('login')
+        <div class="error">
+            {{$message}}
+        </div>
+        @enderror
         <button @if(!$valid) class="disabled" @endif>
             Zaloguj się
         </button>
