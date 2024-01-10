@@ -113,11 +113,12 @@ class RoomList extends Component
     public function reloadData(): void
     {
         $this->validate();
+        // add this query as subquery to the main query and select it as reservation_count
+        // SELECT count(*) FROM reservations WHERE reservations.room_id = rooms.id
 
         $this->rooms = $this->model
             ->select('rooms.*')
-            ->addSelect(DB::raw('count(reservations.id) as reservations'))
-            ->leftJoin('reservations', 'rooms.id', '=', 'reservations.room_id')
+            ->selectRaw(DB::raw("(SELECT count(*) FROM reservations WHERE reservations.room_id = rooms.id) as reservations"))
             ->filter($this->getDataArray())
             ->groupBy('rooms.id')
             ->get();

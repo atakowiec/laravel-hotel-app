@@ -64,14 +64,15 @@ class Room extends Model
     function scopeFilter($query, $filter)
     {
         if (isset($filter['dateFrom']) && isset($filter['dateTo'])) {
-            $query->selectRaw('
-                IF (((
-                    (reservations.date_from > ? AND reservations.date_from < ?) OR
-                    (reservations.date_to > ? AND reservations.date_to < ?) OR
-                    (reservations.date_from < ? AND reservations.date_to > ?) OR
-                    (reservations.date_from = ? AND reservations.date_to = ?)
-                ) AND reservations.id IS NOT NULL), 0, 1)
-                AS available',
+            $query->selectRaw("
+                (SELECT count(*) = 0 as available
+                FROM reservations as rs
+                WHERE rs.room_id = `rooms`.id && (
+                    (rs.date_from > ? AND rs.date_from < ?) OR
+                    (rs.date_to > ? AND rs.date_to < ?) OR
+                    (rs.date_from < ? AND rs.date_to > ?) OR
+                    (rs.date_from = ? AND rs.date_to = ?)
+                    )) AS available",
                 [
                     $filter['dateFrom'],
                     $filter['dateTo'],
@@ -82,8 +83,7 @@ class Room extends Model
                     $filter['dateFrom'],
                     $filter['dateTo'],
                 ]
-            )
-                ->groupBy('rooms.id');
+            );
         }
 
         if (isset($filter['tag']) && count($filter['tag']) > 0) {
