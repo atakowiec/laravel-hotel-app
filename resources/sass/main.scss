@@ -124,6 +124,51 @@
         }
     }
 
+    .pagination-box {
+        .page-info {
+            text-align: center;
+            margin-top: -15px;
+            font-size: 0.8rem;
+
+            span {
+                font-weight: bold;
+                font-size: 0.9rem;
+            }
+        }
+
+        .buttons-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+
+            button {
+                border: 1px solid #ff5a5f;
+                border-radius: 5px;
+                padding: 5px 10px;
+                margin: 0 5px;
+                outline: none;
+                background-color: white;
+                color: #212121;
+                font-weight: bold;
+                font-size: 1rem;
+            }
+
+            button.search {
+                background-color: #ff5a5f;
+                color: white;
+            }
+
+            input.page-value {
+                border: 1px solid #999;
+                border-radius: 5px;
+                padding: 5px;
+                width: 50px;
+                text-align: center;
+            }
+        }
+    }
+
     .room-card {
         padding: 10px;
         display: flex;

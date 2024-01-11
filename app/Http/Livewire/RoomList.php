@@ -12,6 +12,8 @@ use Livewire\Component;
 
 class RoomList extends Component
 {
+    public static int $PER_PAGE = 16;
+
     public Room $model;
     public Collection $rooms;
 
@@ -40,6 +42,7 @@ class RoomList extends Component
         "maxPrice" => ["except" => ""],
         "distance" => ["except" => "-1"],
         "sort" => ["except" => "price:asc"],
+        "page" => ["except" => 1],
     ];
 
     protected function rules(): array
@@ -65,11 +68,14 @@ class RoomList extends Component
     public string $maxPrice;
     public string $distance = "-1";
     public string $sort = "price:asc";
+    public int $max_pages = 1;
+    public int $page = 1;
 
     public function __construct()
     {
         parent::__construct();
         $this->model = new Room();
+        $this->rooms = new Collection();
 
         $this->dateFrom = date("Y-m-d");
         $this->dateTo = date("Y-m-d", strtotime("+1 day"));
@@ -79,11 +85,17 @@ class RoomList extends Component
 
     public function mount(): void
     {
+        $this->rooms = new Collection();
         $this->reloadData();
 
         // initially save dateFrom and dateTo in session
         $this->updatedDateFrom();
         $this->updatedDateTo();
+    }
+
+    public function hydrateRooms(): void
+    {
+        $this->rooms = new Collection();
     }
 
     public function getDataArray(): array
@@ -113,8 +125,6 @@ class RoomList extends Component
     public function reloadData(): void
     {
         $this->validate();
-        // add this query as subquery to the main query and select it as reservation_count
-        // SELECT count(*) FROM reservations WHERE reservations.room_id = rooms.id
 
         $this->rooms = $this->model
             ->select('rooms.*')
@@ -122,6 +132,17 @@ class RoomList extends Component
             ->filter($this->getDataArray())
             ->groupBy('rooms.id')
             ->get();
+
+        $this->max_pages = ceil($this->rooms->count() / RoomList::$PER_PAGE);
+
+        $this->page = min($this->page, $this->max_pages);
+    }
+
+    public function getPageRooms()
+    {
+        // get page rooms from $rooms property based on pages query parameter
+
+        return $this->rooms->forPage($this->page, RoomList::$PER_PAGE);
     }
 
     public function updated(): void
