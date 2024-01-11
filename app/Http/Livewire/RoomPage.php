@@ -15,6 +15,7 @@ class RoomPage extends Component
     public string $dateTo = '';
     public bool $available = false;
     public float $totalPrice = 0;
+    public int $days = 0;
 
     protected $rules = [
         'dateFrom' => 'required|date|after:yesterday',
@@ -44,7 +45,7 @@ class RoomPage extends Component
         $this->updateTotalPrice();
     }
 
-    public function bookRoom()
+    public function bookRoom(): void
     {
         $this->validate();
 
@@ -56,6 +57,8 @@ class RoomPage extends Component
             'total_cost' => $this->totalPrice,
             'cancelled' => false
         ]);
+
+        redirect("/profile", ["message" => "Pokój zostal zarezerwowany"]);
     }
 
     public function updateAvailable(): void
@@ -80,8 +83,8 @@ class RoomPage extends Component
     public function updateTotalPrice(): void
     {
         // days between dateFrom and dateTo (including) times price
-        $days = (strtotime($this->dateTo) - strtotime($this->dateFrom)) / (60 * 60 * 24);
-        $this->totalPrice = $days * $this->room->price;
+        $this->days = (strtotime($this->dateTo) - strtotime($this->dateFrom)) / (60 * 60 * 24);
+        $this->totalPrice = $this->days * $this->room->price;
     }
 
     public function updated($field): void

@@ -70,7 +70,24 @@ body {
         }
     }
 
-    .register-link  {
+    .profile-link {
+        display: flex;
+        align-items: center;
+        border-radius: 15px;
+        padding: 3px;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.2s linear;
+
+        img {
+            width: 25px;
+            height: 25px;
+            border-radius: 200px;
+            margin-right: 5px;
+        }
+    }
+
+    .gray-nav-button  {
         margin-right: 5px;
         background-color: #e6e6e6;
         color: #333;
@@ -80,7 +97,7 @@ body {
         }
     }
 
-    .login-link, .register-link {
+    .login-link, .gray-nav-button {
         border-radius: 5px;
         padding: 5px 10px;
         font-size: 14px;
@@ -115,6 +132,8 @@ body {
     justify-content: center;
     align-items: center;
     animation: spin 1s ease-in-out infinite;
+    margin: 0;
+    padding: 0;
 
     img {
         width: 50px;

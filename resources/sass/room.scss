@@ -1,6 +1,15 @@
 .room-box {
     margin-bottom: 50px;
 
+    .confirmation-values-box button {
+        color: #fff;
+        border-radius: 10px !important;
+        border: 0;
+        background-color: #ff5a5f;
+        font-weight: bold;
+        padding: 10px 25px;
+    }
+
     & > h4 {
         font-weight: bold;
         margin-bottom: 10px;

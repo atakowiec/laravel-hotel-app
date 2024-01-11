@@ -25,7 +25,7 @@
             </div>
             <div class="col-3 book-box">
                 <div class="box">
-                <h4>Zarezerwuj</h4>
+                    <h4>Zarezerwuj</h4>
                     <label>
                         <span>Od</span>
                         <input type="date" name="date-from" wire:model="dateFrom">
@@ -45,19 +45,22 @@
                     </div>
                 </div>
                 <div class="book-button">
-                    <button wire:loading disabled class="submit">
-                        <x-loading-animation size="sm"/>
-                    </button>
-                    <button wire:loading.remove wire:click="bookRoom()" @if(!$valid || !$available) disabled @endif class="submit">
+                    <button @if(!$valid || !$available) disabled @else onclick="showFloatingContainer('book-room')"
+                            @endif class="submit">
+                        <span wire:loading.class.remove="d-none" class="d-none d-flex">
+                            <x-loading-animation size="sm"/>
+                        </span>
+                        <span wire:loading.remove>
                         @if($valid)
-                            @if($available)
-                                Zarezerwuj za {{ $totalPrice }} zł
+                                @if($available)
+                                    Zarezerwuj za {{ $totalPrice }} zł
+                                @else
+                                    Termin zajęty
+                                @endif
                             @else
-                                Termin zajęty
+                                Zarezerwuj
                             @endif
-                        @else
-                            Zarezerwuj
-                        @endif
+                        </span>
                     </button>
                 </div>
             </div>
@@ -69,4 +72,25 @@
             <div class="tag">{{ $tag }}</div>
         @endforeach
     </div>
+    <x-floating-container id="book-room">
+        <h1>
+            Potwierdzenie rezerwacji
+        </h1>
+        <div class="confirmation-values-box">
+            <div class="key">
+                Data zameldowania: <b>{{ $dateFrom }}</b>
+            </div>
+            <div class="key">
+                Data wymeldowania: <b>{{ $dateTo }}</b>
+            </div>
+            <div class="key">
+                Kwota: <b>{{ $days }} dni * {{ $room->price }}zł = {{ $totalPrice }}zł</b>
+            </div>
+            <div class="text-center mt-3">
+                <button wire:click="bookRoom">
+                    Zarezerwuj
+                </button>
+            </div>
+        </div>
+    </x-floating-container>
 </div>

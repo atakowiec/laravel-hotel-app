@@ -20,10 +20,20 @@
                     </li>
                 </ul>
                 @auth
-
+                    <div class="nav-item pe-0 pe-md-2">
+                        <a class="nav-link" href="{{ route('logout') }}">
+                            Wyloguj
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link gray-nav-button profile-link" href="{{ route('profile') }}">
+                            <img src="{{asset("/images/user.png")}}" class="profile-avatar" alt="profile avatar">
+                            {{auth()->user()->nickname}}
+                        </a>
+                    </div>
                 @else
                     <div class="nav-item">
-                        <a class="nav-link register-link" href="{{ route('register') }}">
+                        <a class="nav-link gray-nav-button" href="{{ route('register') }}">
                             Zarejestruj się
                         </a>
                     </div>

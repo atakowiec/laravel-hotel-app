@@ -12,12 +12,12 @@
             </div>
             <div class="info-box">
                 <div class="name">
-                    {{json_encode(auth()->user())}}
+                    {{auth()->user()->nickname}}
                 </div>
                 <h4>
                     Dane kontaktowe
                 </h4>
-                <div class="email">johndoe@gmail.com</div>
+                <div class="email">{{auth()->user()->email}}</div>
                 <div class="phone-number">081234567890</div>
                 <h4>
                     Adres
