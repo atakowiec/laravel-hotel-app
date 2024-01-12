@@ -13,10 +13,10 @@ class Profile extends Component
     public ?Reservation $nextReservation;
     public Collection $currentReservations;
     public Collection $futureReservations;
-
     public string $oldPassword = '';
     public string $newPassword = '';
     public string $newPasswordConfirmation = '';
+    public bool $hasAnyReservations = true;
 
     protected array $rules = [
         'oldPassword' => 'required',
@@ -39,10 +39,11 @@ class Profile extends Component
 
     public function mount(): void
     {
-        $all = Reservation::where('user_id', 1)
+        $all = Reservation::where('user_id', auth()->user()->id)
             ->orderBy('date_from')->get();
 
         $today = now()->format('Y-m-d');
+        $this->hasAnyReservations = $all->count() > 0;
         $this->pastReservations = $all->where('date_to', '<', $today);
         $this->futureReservations = $all->where('date_from', '>', $today);
         $this->currentReservations = $all->where('date_from', '<=', $today)->where('date_to', '>=', $today);

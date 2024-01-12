@@ -87,6 +87,17 @@
             background-color: #e44b4f;
         }
 
+        &.back-button {
+            background-color: transparent;
+            border: 1px solid #ccc;
+            color: #000;
+            margin-top: 10px;
+
+            &:hover {
+                background-color: #ddd;
+            }
+        }
+
         &.disabled {
             background-color: #ddd;
             color: #aaa;

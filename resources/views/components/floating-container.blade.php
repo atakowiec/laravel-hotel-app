@@ -1,6 +1,6 @@
 @props(['id' => Str::random(10), "class" => ''])
 
-<div id="{{$id}}" class="floating-container">
+<div id="{{$id}}" class="floating-container" wire>
     <div class="content col-12 col-md-6 col-xxl-4 {{$class}}">
         {{$slot}}
     </div>

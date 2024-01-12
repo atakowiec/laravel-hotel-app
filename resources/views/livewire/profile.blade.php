@@ -4,6 +4,9 @@
     @vite('resources/sass/profile.scss')
 @endpush
 
+@php($user = auth()->user())
+@php($address = $user->address)
+
 <div class="row mx-auto col-12 col-md-9 col-xxl-6 profile-box">
     <div class="left-panel col-3">
         <div>
@@ -12,19 +15,23 @@
             </div>
             <div class="info-box">
                 <div class="name">
-                    {{auth()->user()->nickname}}
+                    {{$user->nickname}}
                 </div>
                 <h4>
                     Dane kontaktowe
                 </h4>
-                <div class="email">{{auth()->user()->email}}</div>
-                <div class="phone-number">081234567890</div>
-                <h4>
-                    Adres
-                </h4>
-                <div class="address">
-                    Lublin 20-001,<br> ul. Lubartowska 1
-                </div>
+                <div class="email">{{$user->email}}</div>
+                <div class="phone-number">{{$user->phone_number}}</div>
+            </div>
+            <h4>
+                Adres
+            </h4>
+            <div class="address">
+                {{$address->city}} {{ $address->zip_code }},
+                <br> ul. {{ $address->street }} {{ $address->building_number }}
+                @if(!empty($address->flat_number))
+                    / {{$address->flat_number}}
+                @endif
             </div>
         </div>
         <div>
@@ -34,6 +41,11 @@
         </div>
     </div>
     <div class="reservations-box col-9">
+        @unless($hasAnyReservations)
+            <h2 class="no-reservations">
+                Nie masz żadnych rezerwacji
+            </h2>
+        @endif
         @if($currentReservations->count() > 0)
             <h2>
                 Aktualne rezerwacje
@@ -65,7 +77,7 @@
         @endif
     </div>
 
-    <x-floating-container id="change-password">
+    <x-floating-container component-id="change-password">
         <h1>
             Zmiana hasła
         </h1>
@@ -92,7 +104,6 @@
                 </button>
             </div>
         </div>
-
     </x-floating-container>
 </div>
 
