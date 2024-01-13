@@ -18,13 +18,12 @@
         </div>
     </div>
     <div class="right-box col-3">
-        @if($future)
-            <button class="cancel" wire:click="cancel_reservation({{$reservation->id}})">
-                Anuluj
-            </button>
-        @endif
         @if($reservation->cancelled)
             Anulowano
+        @elseif($future)
+            <button class="cancel" wire:click="showFloatingComponent('cancel_reservation', {{$reservation->id}})">
+                Anuluj
+            </button>
         @endif
     </div>
 </div>

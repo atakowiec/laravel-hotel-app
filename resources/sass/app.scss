@@ -44,6 +44,54 @@ body {
         border-radius: 5px;
         box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.3);
     }
+
+    .floating-confirmation {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        .message {
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+
+            button {
+                margin: 0 5px;
+                border-radius: 5px;
+                padding: 8px 20px;
+                font-size: 0.9rem;
+                font-weight: bold;
+                transition: background-color 0.2s linear;
+                border: none;
+                outline: none;
+
+                &.accept {
+                    background-color: #ff5a5f;
+                    color: #fff;
+
+                    &:hover {
+                        background-color: #ff4449;
+                    }
+                }
+
+                &.cancel {
+                    background-color: #e6e6e6;
+                    color: #333;
+
+                    &:hover {
+                        background-color: #d4d4d4;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .navbar {

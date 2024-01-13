@@ -21,7 +21,7 @@
                     Dane kontaktowe
                 </h4>
                 <div class="email">{{$user->email}}</div>
-                <div class="phone-number">{{$user->phone_number}}</div>
+                <div class="phone-number">{{number_format($user->phone_number, thousands_separator: " ")}}</div>
             </div>
             <h4>
                 Adres
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div>
-            <button onclick="showFloatingContainer('change-password')">
+            <button wire:click="showFloatingComponent('change_password')">
                 Zmień hasło
             </button>
         </div>
@@ -77,7 +77,15 @@
         @endif
     </div>
 
-    <x-floating-container component-id="change-password">
+    <x-floating-confirmation
+        id="cancel_reservation"
+        title="Anulowanie rezerwacji"
+        message="Czy na pewno chcesz anulować rezerwację?"
+        acceptText="Anuluj rezerwację"
+        cancelText="Nie, nie anuluj"
+    />
+
+    <x-floating-container id="change_password">
         <h1>
             Zmiana hasła
         </h1>

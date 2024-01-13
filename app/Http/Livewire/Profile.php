@@ -3,12 +3,18 @@
 namespace App\Http\Livewire;
 
 use App\Models\Reservation;
+use App\Traits\FloatingComponent;
+use App\Traits\FloatingConfirmation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class Profile extends Component
 {
+    use FloatingConfirmation {
+        showFloatingComponent as protected traitShowFloatingComponent;
+    }
+
     public Collection $pastReservations;
     public ?Reservation $nextReservation;
     public Collection $currentReservations;
@@ -32,9 +38,20 @@ class Profile extends Component
         'newPasswordConfirmation.same' => 'Hasła muszą być takie same'
     ];
 
-    public function cancel_reservation($reservationId): void
+    public function cancelReservation($reservationId): void
     {
+        error_log("cancelReservation has been called with id: " . $reservationId);
 
+        $reservation = Reservation::find($reservationId);
+        if (!$reservation || $reservation->cancelled) {
+            return;
+        }
+
+        $reservation->update([
+            'cancelled' => true
+        ]);
+
+        $this->mount();
     }
 
     public function mount(): void
@@ -61,13 +78,59 @@ class Profile extends Component
         }
     }
 
+    public function changePassword(): void
+    {
+        $this->validate();
+
+        if (!auth()->attempt(['email' => auth()->user()->email, 'password' => $this->oldPassword])) {
+            $this->oldPassword = '';
+            $this->addError('oldPassword', 'Podane aktualne hasło jest nieprawidłowe');
+            return;
+        }
+
+        auth()->user()->update([
+            'password' => bcrypt($this->newPassword)
+        ]);
+
+        $this->oldPassword = '';
+        $this->newPassword = '';
+        $this->newPasswordConfirmation = '';
+    }
+
     public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
+
+        if ($propertyName === 'newPassword' && isset($this->newPasswordConfirmation)) {
+            if ($this->newPassword != $this->newPasswordConfirmation) {
+                $this->addError('newPasswordConfirmation', 'Hasła muszą być takie same.');
+            } else {
+                $this->resetErrorBag('newPasswordConfirmation');
+            }
+        }
+    }
+
+    public function showFloatingComponent($id, ...$params): void
+    {
+        $this->traitShowFloatingComponent($id, ...$params);
+
+        if($id != "change_password") return;
+        $this->oldPassword = '';
+        $this->newPassword = '';
+        $this->newPasswordConfirmation = '';
+        $this->resetErrorBag();
     }
 
     public function render(): View
     {
         return view('livewire.profile');
+    }
+
+    public function onConfirm($id, ...$params): void
+    {
+        if($id != "cancel_reservation") return;
+        if(count($params) != 1) return;
+
+        $this->cancelReservation($params[0]);
     }
 }

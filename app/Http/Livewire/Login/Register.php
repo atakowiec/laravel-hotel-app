@@ -78,13 +78,13 @@ class Register extends Component
         $this->nextStage = true;
     }
 
-    public function register()
+    public function register(): void
     {
         $this->validate($this->nextStageRules);
 
         try {
             $this->validate($this->rules);
-        } catch (\Throwable $th) {
+        } catch (\Throwable) {
             $this->nextStage = false;
             return;
         }

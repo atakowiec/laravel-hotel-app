@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="book-button">
-                    <button @if(!$valid || !$available) disabled @else onclick="showFloatingContainer('book-room')"
+                    <button @if(!$valid || !$available) disabled @else wire:click="showFloatingComponent('book-room')"
                             @endif class="submit">
                         <span wire:loading.class.remove="d-none" class="d-none d-flex">
                             <x-loading-animation size="sm"/>

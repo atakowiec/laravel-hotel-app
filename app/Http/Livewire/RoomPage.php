@@ -4,11 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Models\Reservation;
 use App\Models\Room;
+use App\Traits\FloatingComponent;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class RoomPage extends Component
 {
+    use FloatingComponent;
+
     public Room $room;
     public array $tags = [];
     public string $dateFrom = '';
