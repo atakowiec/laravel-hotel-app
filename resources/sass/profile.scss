@@ -9,12 +9,6 @@
         flex-direction: column;
         justify-content: space-between;
 
-        .error {
-            color: red;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
         .button-box {
             display: flex;
             justify-content: center;
@@ -73,16 +67,28 @@
             border: none;
             outline: none;
             font-size: 1rem;
-            background-color: #ff5a5f;
-            color: #fff;
             border-radius: 10px;
             transition: background-color 0.1s ease-in-out;
             width: 100%;
             padding: 10px 0;
             margin-top: 20px;
 
-            &:hover {
-                background-color: #ff7b7f;
+            &:first-child {
+                background-color: #d4d4d4;
+                color: #333;
+
+                &:hover {
+                    background-color: #dcdcdc;
+                }
+            }
+
+            &:last-child {
+                background-color: #ff5a5f;
+                color: #fff;
+
+                &:hover {
+                    background-color: #ff7b7f;
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Address;
 use App\Models\Reservation;
 use App\Traits\FloatingComponent;
 use App\Traits\FloatingConfirmation;
@@ -110,11 +111,23 @@ class Profile extends Component
         }
     }
 
+    private function removeAccount(): void
+    {
+        Reservation::where('user_id', auth()->user()->id)->delete();
+
+        $address_id = auth()->user()->address_id;
+
+        auth()->user()->delete();
+        Address::where('id', $address_id)->delete();
+        auth()->logout();
+        redirect()->to('/');
+    }
+
     public function showFloatingComponent($id, ...$params): void
     {
         $this->traitShowFloatingComponent($id, ...$params);
 
-        if($id != "change_password") return;
+        if ($id != "change_password") return;
         $this->oldPassword = '';
         $this->newPassword = '';
         $this->newPasswordConfirmation = '';
@@ -128,8 +141,14 @@ class Profile extends Component
 
     public function onConfirm($id, ...$params): void
     {
-        if($id != "cancel_reservation") return;
-        if(count($params) != 1) return;
+        if ($id == "remove_account") {
+            $this->removeAccount();
+            return;
+        }
+
+
+        if ($id != "cancel_reservation") return;
+        if (count($params) != 1) return;
 
         $this->cancelReservation($params[0]);
     }

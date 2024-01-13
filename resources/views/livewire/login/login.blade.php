@@ -39,7 +39,7 @@
             @enderror
         </div>
         @error('login')
-        <div class="error">
+        <div class="bottom-error error">
             {{$message}}
         </div>
         @enderror

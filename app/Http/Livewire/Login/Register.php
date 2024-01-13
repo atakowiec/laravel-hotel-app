@@ -28,7 +28,7 @@ class Register extends Component
         'nickname.required' => 'Nazwa uzytkownika jest wymagane.',
         'nickname.min' => 'Nazwa uzytkownika musi mieć minimum :min znaki.',
         'nickname.max' => 'Nazwa uzytkownika może mieć maksymalnie :max znaków.',
-        'nickname.unique' => 'Nazwa uzytkownika jest już zajęty.',
+        'nickname.unique' => 'Nazwa uzytkownika jest już zajęta.',
         'email.required' => 'Email jest wymagany.',
         'email.email' => 'Email musi być poprawny.',
         'email.unique' => 'Email jest już zajęty.',
@@ -39,6 +39,17 @@ class Register extends Component
         'password_confirmation.required' => 'Potwierdzenie hasła jest wymagane.',
         'terms.required' => 'Musisz zaakceptować regulamin.',
         'terms.accepted' => 'Musisz zaakceptować regulamin.',
+        'phone_number.required' => 'Numer telefonu jest wymagany.',
+        'phone_number.regex' => 'Numer telefonu musi składać się z 9 cyfr.',
+        'phone_number.unique' => 'Numer telefonu jest już zajęty.',
+        'city.required' => 'Miasto jest wymagane.',
+        'city.not_regex' => 'Miasto nie może składać się z samych cyfr.',
+        'zip_code.required' => 'Kod pocztowy jest wymagany.',
+        'zip_code.regex' => 'Kod pocztowy musi być w formacie XX-XXX.',
+        'street.required' => 'Ulica jest wymagana.',
+        'building_number.required' => 'Numer budynku jest wymagany.',
+        'building_number.regex' => 'Numer budynku musi zawierać cyfry i opcjonalnie jedną literę.',
+        'flat_number.regex' => 'Numer mieszkania musi zawierać cyfry i opcjonalnie jedną literę.'
     ];
 
     protected array $rules = [
@@ -51,7 +62,7 @@ class Register extends Component
     ];
 
     protected array $nextStageRules = [
-        'city' => ['required', 'not_regex:/^(\d)$/'],
+        'city' => ['required', 'not_regex:/^(\d)+$/'],
         'zip_code' => ['required', 'regex:/^([0-9]{2}-[0-9]{3})$/'],
         'street' => ['required'],
         'building_number' => ['required', 'regex:/^(\d+[a-zA-Z]{0,1})$/'],

@@ -5,7 +5,7 @@
 @endpush
 
 @php($valid = (!$nextStage && $this->getErrorBag()->isEmpty() && !empty($email) && !empty($password) && !empty($nickname) && !empty($password_confirmation) && $terms == true)
-            || ($nextStage && $this->getErrorBag()->isEmpty() && !empty($city) && !empty($zip_code) && !empty($street) && !empty($building_number) && !empty($flat_number)))
+            || ($nextStage && $this->getErrorBag()->isEmpty() && !empty($city) && !empty($zip_code) && !empty($street) && !empty($building_number)))
 
 <div class="login-box col-12 col-sm-8 col-md-4 col-xxl-3">
     <div class="top-buttons-box">

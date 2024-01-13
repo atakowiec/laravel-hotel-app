@@ -9,7 +9,7 @@
 
 <div class="row mx-auto col-12 col-md-9 col-xxl-6 profile-box">
     <div class="left-panel col-3">
-        <div>
+        <div class="text-center">
             <div class="avatar-box">
                 <img src="{{ asset("images/user.png") }}" alt="avatar" class="avatar">
             </div>
@@ -23,7 +23,7 @@
                 <div class="email">{{$user->email}}</div>
                 <div class="phone-number">{{number_format($user->phone_number, thousands_separator: " ")}}</div>
             </div>
-            <h4>
+            <h4 class="mt-3">
                 Adres
             </h4>
             <div class="address">
@@ -37,6 +37,9 @@
         <div>
             <button wire:click="showFloatingComponent('change_password')">
                 Zmień hasło
+            </button>
+            <button wire:click="showFloatingComponent('remove_account')">
+                Usun konto
             </button>
         </div>
     </div>
@@ -83,6 +86,14 @@
         message="Czy na pewno chcesz anulować rezerwację?"
         acceptText="Anuluj rezerwację"
         cancelText="Nie, nie anuluj"
+    />
+
+    <x-floating-confirmation
+        id="remove_account"
+        title="Usuniecie konta"
+        message="Czy na pewno chcesz usunąć konto? Wszystkie dane zostaną bezpowrotnie usunięte!"
+        acceptText="Usuń konto"
+        cancelText="Nie, nie usuwaj"
     />
 
     <x-floating-container id="change_password">

@@ -37,7 +37,6 @@ class Login extends Component
             return;
         }
 
-        $this->password = "";
         $this->addError("login", "Niepoprawne dane");
     }
 
