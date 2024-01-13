@@ -71,11 +71,17 @@ class RoomPage extends Component
 
         $reservations = Reservation::where('room_id', $this->room->id)
             ->where(function ($query) use ($dateFrom, $dateTo) {
-                $query->whereBetween('date_from', [$dateFrom, $dateTo])
-                    ->orWhereBetween('date_to', [$dateFrom, $dateTo])
+                $query->orWhere(function ($query) use ($dateFrom, $dateTo) {
+                        $query->where('date_from', '<', $dateFrom)
+                            ->where('date_to', '>', $dateTo);
+                    })
                     ->orWhere(function ($query) use ($dateFrom, $dateTo) {
-                        $query->where('date_from', '<=', $dateFrom)
-                            ->where('date_to', '>=', $dateTo);
+                        $query->where('date_to', '>', $dateFrom)
+                            ->where('date_to', '<', $dateTo);
+                    })
+                    ->orWhere(function ($query) use ($dateFrom, $dateTo) {
+                        $query->where('date_from', '>', $dateFrom)
+                            ->where('date_from', '<', $dateTo);
                     });
             })
             ->get();
