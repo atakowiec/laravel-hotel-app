@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
+    use HasFactory;
     protected $table = 'address';
 
     protected $fillable = [
@@ -18,16 +19,6 @@ class Address extends Model
         'building_number',
         'flat_number'
     ];
-
-    public function setUpdatedAt($value)
-    {
-        return null;
-    }
-
-    public function setCreatedAt($value)
-    {
-        return null;
-    }
 
     public function user() : BelongsTo
     {

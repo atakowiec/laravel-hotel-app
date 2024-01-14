@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class RoomTags extends Model
 {
+    use HasFactory;
     protected $table = 'room_tags';
 
     public static function getTagsCount(Collection $rooms): array

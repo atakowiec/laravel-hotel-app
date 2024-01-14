@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
 class Room extends Model
@@ -27,10 +28,10 @@ class Room extends Model
         return $this->belongsToMany(AvailableTags::class, 'room_tags', 'room_id', 'tag_id');
     }
 
-//    public function reservations(): HasMany
-//    {
-//        return $this->hasMany(Reservation::class);
-//    }
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class);
+    }
 
     public
     static function getTags($id): array
