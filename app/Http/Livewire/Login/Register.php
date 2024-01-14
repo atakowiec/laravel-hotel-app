@@ -4,11 +4,14 @@ namespace App\Http\Livewire\Login;
 
 use App\Models\Address;
 use App\Models\User;
+use App\Traits\hasInputErrorClass;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class Register extends Component
 {
+    use hasInputErrorClass;
+
     public string $nickname;
     public string $email;
     public string $password;
@@ -23,7 +26,6 @@ class Register extends Component
 
     public bool $nextStage = false;
 
-    // polish messages
     protected array $messages = [
         'nickname.required' => 'Nazwa uzytkownika jest wymagane.',
         'nickname.min' => 'Nazwa uzytkownika musi mieć minimum :min znaki.',
@@ -122,15 +124,10 @@ class Register extends Component
         redirect('/')->with("message", "Konto utworzone pomyślnie");
     }
 
-    private function getPreparedPhoneNumber()
+    private function getPreparedPhoneNumber() : string
     {
         $stage1 = str_replace("-", "", $this->phone_number);
         return str_replace(" ", "", $stage1);
-    }
-
-    public function getErrorClass($field): string
-    {
-        return $this->getErrorBag()->has($field) ? 'class=is-invalid' : '';
     }
 
     public function render(): View

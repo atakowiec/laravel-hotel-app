@@ -10,11 +10,16 @@ class Room extends Model
 {
     protected $table = 'rooms';
 
-    public
-    function getCreatedAtColumn(): string
-    {
-        return 'id';
-    }
+    protected $fillable = [
+        'name',
+        'capacity',
+        'area',
+        'price',
+        'x_pos',
+        'z_pos',
+        'distance',
+        'photo',
+    ];
 
     public
     function tags(): BelongsToMany

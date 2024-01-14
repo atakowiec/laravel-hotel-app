@@ -20,7 +20,7 @@
         </div>
     @endif
     <div class="image">
-        <img src="{{ asset('images/room.jpg') }}" alt="room">
+        <img src="{{ asset("storage/rooms/$room->photo") }}" alt="room">
     </div>
     <div class="info">
         <div class="info-content">

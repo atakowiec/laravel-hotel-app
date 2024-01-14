@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Login;
 
-use Illuminate\Routing\Redirector;
+use App\Traits\hasInputErrorClass;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class Login extends Component
 {
+    use hasInputErrorClass;
+
     public $email;
     public $password;
 
@@ -38,11 +40,6 @@ class Login extends Component
         }
 
         $this->addError("login", "Niepoprawne dane");
-    }
-
-    public function getErrorClass($field): string
-    {
-        return $this->getErrorBag()->has($field) ? "class=is-invalid" : '';
     }
 
     public function render(): View

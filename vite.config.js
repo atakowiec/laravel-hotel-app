@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/sass/room.scss',
                 'resources/sass/login.scss',
                 'resources/sass/profile.scss',
+                'resources/sass/admin.scss',
                 'resources/js/main.js'
             ],
             refresh: true,

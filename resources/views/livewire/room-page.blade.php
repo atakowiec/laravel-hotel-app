@@ -21,7 +21,7 @@
         </div>
         <div class="row">
             <div class="col-9 me-0">
-                <img class="room-image" src="{{asset("images/room.jpg")}}" alt="room"/>
+                <img class="room-image" src="{{ asset("storage/rooms/$room->photo") }}" alt="room"/>
             </div>
             <div class="col-3 book-box">
                 <div class="box">

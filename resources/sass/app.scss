@@ -135,7 +135,7 @@ body {
         }
     }
 
-    .gray-nav-button  {
+    .gray-nav-button {
         margin-right: 5px;
         background-color: #e6e6e6;
         color: #333;
@@ -206,4 +206,30 @@ body {
     }
 }
 
+.input-box {
+    margin-bottom: 20px;
 
+    label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    input:not([type="checkbox"]) {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        transition: all .3s ease-in-out;
+
+        &.is-invalid {
+            border-color: #f00 !important;
+        }
+
+        &:focus {
+            border-color: #000;
+        }
+    }
+}

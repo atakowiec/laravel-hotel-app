@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
@@ -22,4 +23,12 @@ Route::get('/logout', [LoginController::class, 'destroy'])
 
 Route::get('/profile', [ProfileController::class, 'index'])
     ->name("profile")
+    ->middleware("auth");
+
+Route::get('/admin-panel', [AdminController::class, 'index'])
+    ->name("admin")
+    ->middleware("auth");
+
+Route::get('/edit-room', [AdminController::class, 'create'])
+    ->name("edit-room")
     ->middleware("auth");
