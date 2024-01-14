@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait FloatingComponent
+trait WithFloatingComponent
 {
     public array $visible = [];
 

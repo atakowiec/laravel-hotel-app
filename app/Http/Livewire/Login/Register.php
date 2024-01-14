@@ -4,13 +4,13 @@ namespace App\Http\Livewire\Login;
 
 use App\Models\Address;
 use App\Models\User;
-use App\Traits\hasInputErrorClass;
+use App\Traits\WithInputErrorClass;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class Register extends Component
 {
-    use hasInputErrorClass;
+    use WithInputErrorClass;
 
     public string $nickname;
     public string $email;

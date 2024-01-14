@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\FloatingComponent;
+use App\Traits\WithFloatingComponent;
 
 class ProfileController extends Controller
 {

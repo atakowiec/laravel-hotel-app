@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Support\MessageBag;
 
-trait hasInputErrorClass
+trait WithInputErrorClass
 {
     public function getErrorClass($field): string
     {

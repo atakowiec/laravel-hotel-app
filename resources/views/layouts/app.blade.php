@@ -17,6 +17,9 @@
 </head>
 <body>
 @yield('page')
+
+@livewire('flash-message')
+
 @stack('other-scripts')
 @livewireScripts
 </body>

@@ -4,15 +4,15 @@ namespace App\Http\Livewire;
 
 use App\Models\Address;
 use App\Models\Reservation;
-use App\Traits\FloatingComponent;
-use App\Traits\FloatingConfirmation;
+use App\Traits\WithFloatingComponent;
+use App\Traits\WithFloatingConfirmation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class Profile extends Component
 {
-    use FloatingConfirmation {
+    use WithFloatingConfirmation {
         showFloatingComponent as protected traitShowFloatingComponent;
     }
 

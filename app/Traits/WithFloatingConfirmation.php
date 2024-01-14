@@ -2,9 +2,9 @@
 
 namespace App\Traits;
 
-trait FloatingConfirmation
+trait WithFloatingConfirmation
 {
-    use FloatingComponent {
+    use WithFloatingComponent {
         hideFloatingComponent as protected _traitHideFloatingComponent;
         showFloatingComponent as protected _traitShowFloatingComponent;
     }

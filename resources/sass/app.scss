@@ -233,3 +233,32 @@ body {
         }
     }
 }
+
+.flash-messages-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100vh;
+    pointer-events: none;
+
+    .flash-message {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 0 5px 5px 0;
+        margin: 0 10px 10px 0;
+        box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.3);
+        pointer-events: all;
+        border-left: 5px solid #ff5a5f;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f2f2f2;
+        }
+    }
+}

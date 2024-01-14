@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\Login;
 
-use App\Traits\hasInputErrorClass;
+use App\Traits\WithInputErrorClass;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class Login extends Component
 {
-    use hasInputErrorClass;
+    use WithInputErrorClass;
 
     public $email;
     public $password;

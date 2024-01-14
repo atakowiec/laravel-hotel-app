@@ -4,7 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\AvailableTags;
 use App\Models\Room;
-use App\Traits\hasInputErrorClass;
+use App\Traits\WithFlashMessage;
+use App\Traits\WithInputErrorClass;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\File;
 use Illuminate\View\View;
@@ -13,8 +14,9 @@ use Livewire\WithFileUploads;
 
 class EditRoom extends Component
 {
-    use hasInputErrorClass;
+    use WithInputErrorClass;
     use WithFileUploads;
+    use WithFlashMessage;
 
     protected $queryString = [
         'roomId' => ['except' => "-1"],
@@ -33,7 +35,6 @@ class EditRoom extends Component
     public array $roomTags = [];
     public string $initialPhoto = "";
 
-    // polish messages
     protected $messages = [
         'roomPhoto.required' => 'Zdjęcie jest wymagane.',
         'roomPhoto.image' => 'Zdjęcie musi być obrazem.',
@@ -64,8 +65,7 @@ class EditRoom extends Component
         'roomArea' => ['required', 'numeric', 'min:1'],
         'roomPrice' => ['required', 'numeric', 'min:1'],
         'roomXPos' => ['required', 'integer'],
-        'roomZPos' => ['required', 'integer'],
-        'roomTags' => ['required', 'array'],
+        'roomZPos' => ['required', 'integer']
     ];
 
     public function isCorrectPhoto(): bool
@@ -130,6 +130,10 @@ class EditRoom extends Component
 
         foreach ($this->roomTags as $tagId)
             $room->tags()->attach($tagId);
+
+        $this->roomId = $room->id;
+
+        $this->addFlashMessage("Dodano nowy pokój.");
     }
 
     private function updateRoom(): void
@@ -148,6 +152,8 @@ class EditRoom extends Component
         $room->tags()->detach();
         foreach ($this->roomTags as $tagId)
             $room->tags()->attach($tagId);
+
+        $this->addFlashMessage("Zaktualizowano pokój.");
     }
 
     private function savePhoto(Room $room): void

@@ -2,7 +2,7 @@
 
 <div class="reservation-card col-12 row">
     <div class="room-image col-3">
-        <img src="{{ asset("storage/rooms/$room->photo") }}" alt="room">
+        <img src="{{ asset("storage/rooms/{$reservation->room->photo}") }}" alt="room">
     </div>
     <div class="info col-6">
         <h5>
