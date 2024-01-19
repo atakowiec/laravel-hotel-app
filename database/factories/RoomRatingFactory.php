@@ -13,7 +13,7 @@ class RoomRatingFactory extends Factory
     public function definition(): array
     {
         return [
-            'room_id' => $this->faker->numberBetween(1, 8),
+            'room_id' => $this->faker->numberBetween(1, 15),
             'user_id' => $this->faker->numberBetween(1, 100),
             'value' => 0.5 * $this->faker->numberBetween(1, 10),
             'created_at' => Carbon::now(),

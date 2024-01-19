@@ -13,10 +13,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        Address::factory(100)->create();
-        User::factory(100)->create();
-        Reservation::factory(1000)->create();
+//        Address::factory(100)->create();
+//        User::factory(100)->create();
+//        Reservation::factory(1000)->create();
         RoomRating::factory(2000)->create();
-        RoomTags::factory(100)->create();
+        RoomTags::factory(200)->create();
     }
 }

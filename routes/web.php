@@ -25,7 +25,7 @@ Route::get('/profile', [ProfileController::class, 'index'])
     ->name("profile")
     ->middleware("auth");
 
-Route::get('/admin-panel', [AdminController::class, 'index'])
+Route::get('/admin', [AdminController::class, 'index'])
     ->name("admin")
     ->middleware("auth");
 

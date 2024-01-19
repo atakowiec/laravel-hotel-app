@@ -4,10 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Models\Address;
 use App\Models\Reservation;
-use App\Traits\WithFloatingComponent;
 use App\Traits\WithFloatingConfirmation;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\View\View;
+use \Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Profile extends Component
@@ -113,8 +112,6 @@ class Profile extends Component
 
     private function removeAccount(): void
     {
-        Reservation::where('user_id', auth()->user()->id)->delete();
-
         $address_id = auth()->user()->address_id;
 
         auth()->user()->delete();

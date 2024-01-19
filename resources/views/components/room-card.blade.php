@@ -1,4 +1,4 @@
-@props(["room"])
+@props(["room", "admin" => false])
 
 @php
     use App\Models\Room;
@@ -11,7 +11,7 @@
 @endphp
 
 <div class="room-card">
-    @if(!$room->available)
+    @if(!$room->available && !$admin)
         <div class="not-available-overlay">
             <div class="not-available-text">
                 <h3>Niedostępny</h3>
@@ -55,16 +55,30 @@
                 </div>
             @endif
         </div>
-        <div class="price">
-            <a href="/room/{{ $room->id }}">
-                <div class="button">
-                    Szczególy
+        @if($admin)
+            <div class="price">
+                <a href="/edit-room?roomId={{ $room->id }}">
+                    <div class="button">
+                        Edytuj
+                    </div>
+                </a>
+                <div class="button delete" wire:click="showFloatingComponent('deleteRoom', {{$room->id}})">
+                    Usuń
                 </div>
-            </a>
-            <span>{{ number_format($room->price, 2) }} zł / noc</span>
-            <span class="reservation-count">
-            {{ $room->reservations }} {{ $reservationMessage }}
-            </span>
-        </div>
+                <span>{{ number_format($room->price, 2) }} zł / noc</span>
+            </div>
+        @else
+            <div class="price">
+                <a href="/room/{{ $room->id }}">
+                    <div class="button">
+                        Szczególy
+                    </div>
+                </a>
+                <span>{{ number_format($room->price, 2) }} zł / noc</span>
+                <span class="reservation-count">
+                {{ $room->reservations }} {{ $reservationMessage }}
+                </span>
+            </div>
+        @endif
     </div>
 </div>

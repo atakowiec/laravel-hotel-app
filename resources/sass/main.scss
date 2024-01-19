@@ -1,4 +1,4 @@
-.main {
+.main, .admin-rooms-list {
     margin-bottom: 50px;
     padding-top: 50px;
 
@@ -271,23 +271,31 @@
                     color: #999;
                 }
 
+                .button {
+                    width: 110px;
+                    padding: 8px 10px;
+                    border: none;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    font-size: 1rem;
+                    margin-bottom: 5px;
+                    cursor: pointer;
+                    text-decoration: none;
+                    text-align: center;
+                }
+
                 a {
                     text-decoration: none;
 
                     .button {
-                        width: 110px;
-                        padding: 8px 10px;
-                        border: none;
-                        border-radius: 5px;
                         background-color: #ff5a5f;
                         color: white;
-                        font-weight: bold;
-                        font-size: 1rem;
-                        margin-bottom: 5px;
-                        cursor: pointer;
-                        text-decoration: none;
-                        text-align: center;
                     }
+                }
+
+                .delete {
+                    background-color: #999;
+                    color: white;
                 }
             }
         }

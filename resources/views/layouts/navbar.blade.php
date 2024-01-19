@@ -18,6 +18,11 @@
                             Wyszukiwarka
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/admin">
+                            Zarządzanie pokojami
+                        </a>
+                    </li>
                 </ul>
                 @auth
                     <div class="nav-item pe-0 pe-md-2">
