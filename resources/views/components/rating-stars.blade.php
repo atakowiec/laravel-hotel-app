@@ -1,22 +1,26 @@
-@props(['room_id'])
+@props(['room_id' => null, 'rating' => null])
 @php
     use App\Models\Room;
-    $ratingData = Room::getRating($room_id);
-    $rating = $ratingData['average'];
+
+    $rating = isset($room_id) ? Room::getRating($room_id)['average'] : $rating;
+    $ratingClone = $rating;
 @endphp
 
 <div class="rating-stars">
     @for($i = 0; $i < 5; $i++)
-        @if($rating >= 1)
+        @if($ratingClone >= 1)
             <img src="{{asset("images/full-star.png")}}" alt="star">
-        @elseif($rating >= 0.5)
+        @elseif($ratingClone >= 0.5)
             <img src="{{asset("images/half-star.png")}}" alt="half star">
         @else
             <img src="{{asset("images/empty-star.png")}}" alt="empty star">
         @endif
         @php
-            $rating--;
+            $ratingClone--;
         @endphp
     @endfor
-    <span>{{ number_format($ratingData['average'], 1) }} ({{ $ratingData["count"] }} opinii)</span>
+    @if(isset($room_id))
+        @php($ratingData = Room::getRating($room_id))
+        <span>{{ number_format($rating, 1) }} ({{ $ratingData["count"] }} opinii)</span>
+    @endif
 </div>

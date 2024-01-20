@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Reservation extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'user_id',
         'room_id',
@@ -21,5 +22,12 @@ class Reservation extends Model
     public function room(): BelongsTo
     {
         return $this->belongsTo(Room::class);
+    }
+
+    public function getUserReview(): ?RoomRating
+    {
+        return RoomRating::where('user_id', auth()->user()->id)
+            ->where('room_id', $this->room_id)
+            ->first();
     }
 }

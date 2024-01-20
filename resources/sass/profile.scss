@@ -184,6 +184,10 @@
             }
 
             .info {
+                a {
+                    text-decoration: none;
+                }
+
                 h5 {
                     margin-bottom: 5px;
                     font-size: 1.3rem;
@@ -213,6 +217,71 @@
                     border-radius: 6px;
                     object-position: center;
                 }
+            }
+        }
+    }
+}
+
+
+.write-review-box {
+    .stars {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+
+        img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            object-position: center;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+    }
+
+    .input-box {
+        margin-top: 20px;
+
+        label {
+            font-size: 1rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        textarea {
+            border: none;
+            outline: none;
+            background-color: rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            font-size: 1rem;
+            color: #333;
+            resize: none;
+            height: 100px;
+        }
+    }
+
+    .button-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+
+        button {
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background-color: #ff5a5f;
+            color: #fff;
+            border-radius: 10px;
+            transition: background-color 0.1s ease-in-out;
+            padding: 10px 20px;
+
+            &:hover {
+                background-color: #ff7b7f;
             }
         }
     }

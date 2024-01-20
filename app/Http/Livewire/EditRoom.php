@@ -6,9 +6,8 @@ use App\Models\AvailableTags;
 use App\Models\Room;
 use App\Traits\WithFlashMessage;
 use App\Traits\WithInputErrorClass;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\File;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -59,7 +58,7 @@ class EditRoom extends Component
     ];
 
     protected $rules = [
-        'roomPhoto' => ['required', 'image', 'max:8196', 'mimes:jpg,jpeg,png'],
+        'roomPhoto' => ['nullable', 'image', 'max:8192', 'mimes:jpg,jpeg,png'],
         'roomName' => ['required', 'string', 'max:255'],
         'roomCapacity' => ['required', 'integer', 'min:1'],
         'roomArea' => ['required', 'numeric', 'min:1'],
@@ -92,7 +91,7 @@ class EditRoom extends Component
     {
         $this->allTags = AvailableTags::all();
 
-        if($this->roomId == "-1") return;
+        if ($this->roomId == "-1") return;
 
         $room = Room::find($this->roomId);
         $this->roomName = $room->name;
@@ -107,17 +106,23 @@ class EditRoom extends Component
 
     public function save(): void
     {
-        $this->validate();
+        if ($this->initialPhoto === "" && $this->roomPhoto === null) {
+            $this->validate(array_merge($this->rules, [
+                'roomPhoto' => ['required', 'image', 'max:8192', 'mimes:jpg,jpeg,png'],
+            ]));
+            return;
+        } else {
+            $this->validate();
+        }
 
-        if($this->roomId === "-1")
+        if ($this->roomId === "-1")
             $this->createRoom();
         else
             $this->updateRoom();
     }
 
-    private function createRoom(): void
+    private function setRoomData(Room $room): void
     {
-        $room = new Room();
         $room->name = $this->roomName;
         $room->capacity = $this->roomCapacity;
         $room->area = $this->roomArea;
@@ -127,6 +132,12 @@ class EditRoom extends Component
         $room->save();
 
         $this->savePhoto($room);
+    }
+
+    private function createRoom(): void
+    {
+        $room = new Room();
+        $this->setRoomData($room);
 
         foreach ($this->roomTags as $tagId)
             $room->tags()->attach($tagId);
@@ -139,15 +150,7 @@ class EditRoom extends Component
     private function updateRoom(): void
     {
         $room = Room::find($this->roomId);
-        $room->name = $this->roomName;
-        $room->capacity = $this->roomCapacity;
-        $room->area = $this->roomArea;
-        $room->price = $this->roomPrice;
-        $room->x_pos = $this->roomXPos;
-        $room->z_pos = $this->roomZPos;
-        $room->save();
-
-        $this->savePhoto($room);
+        $this->setRoomData($room);
 
         $room->tags()->detach();
         foreach ($this->roomTags as $tagId)

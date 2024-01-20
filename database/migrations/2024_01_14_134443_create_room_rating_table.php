@@ -13,6 +13,7 @@ return new class extends Migration
             $table->integer('room_id');
             $table->integer('user_id');
             $table->double('value', 2, 1)->nullable();
+            $table->text('comment')->nullable()->default(null);
             $table->timestamps();
 
             // Definicje kluczy obcych

@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Login;
 use App\Models\Address;
 use App\Models\User;
 use App\Traits\WithInputErrorClass;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Register extends Component
@@ -68,7 +68,7 @@ class Register extends Component
         'zip_code' => ['required', 'regex:/^([0-9]{2}-[0-9]{3})$/'],
         'street' => ['required'],
         'building_number' => ['required', 'regex:/^(\d+[a-zA-Z]{0,1})$/'],
-        'flat_number' => ['regex:/^\d+[a-zA-Z]{0,1}$/']
+        'flat_number' => ['nullable', 'regex:/^\d+[a-zA-Z]{0,1}$/']
     ];
 
     public function updated(string $propertyName): void

@@ -4,6 +4,24 @@
     @vite("resources/sass/room.scss")
 @endpush
 
+@php
+    $rating = [];
+    $userComment = null;
+
+    $isAnyComment = false;
+    foreach ($room->rating as $rate) {
+        if ($rate->user_id == auth()->id()) {
+            $userComment = $rate;
+        } else {
+            $rating[] = $rate;
+        }
+
+        if ($rate->comment != null) {
+            $isAnyComment = true;
+        }
+    }
+@endphp
+
 @php($valid = $this->getErrorBag()->isEmpty())
 
 <div class="row col-12 col-md-10 col-xxl-8 mx-auto room-box">
@@ -72,6 +90,58 @@
             <div class="tag">{{ $tag }}</div>
         @endforeach
     </div>
+    @if($isAnyComment)
+        <div class="col-12 ratings-box">
+            <h4>Twoja opinia</h4>
+            @if($userComment != null)
+                <div class="rating">
+                    <div class="user">
+                        <div class="name">{{ $userComment->user->nickname }}</div>
+                        <div class="date">{{ $userComment->created_at }}</div>
+                    </div>
+                    <div class="stars">
+                        <x-rating-stars :rating="$userComment->value"/>
+                    </div>
+                    @unless($userComment->comment == null)
+                        <div class="comment">
+                            {{ $userComment->comment }}
+                        </div>
+                    @endunless
+                </div>
+            @endif
+
+            <h4>Opinie innych użytkowników</h4>
+            @php($i = 0)
+            @foreach($rating as $rate)
+                @if($i++ >= $shownComments)
+                    @break
+                @endif
+
+                @if($rate->comment != null)
+                    <div class="rating">
+                        <div class="user">
+                            <div class="name">{{ $rate->user->nickname }}</div>
+                            <div class="date">{{ $rate->created_at }}</div>
+                        </div>
+                        <div class="stars">
+                            <x-rating-stars :rating="$rate->value"/>
+                        </div>
+                        <div class="comment">
+                            {{ $rate->comment }}
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+            @if($i++ >= $shownComments)
+                <div class="text-center show-more">
+                    <button wire:click="showMoreComments">
+                        Pokaż więcej
+                    </button>
+                </div>
+            @endif
+        </div>
+    @endif
+
     <x-floating-container id="book-room">
         <h1>
             Potwierdzenie rezerwacji

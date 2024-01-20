@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Reservation;
 use App\Models\Room;
 use App\Traits\WithFloatingComponent;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class RoomPage extends Component
@@ -19,6 +19,8 @@ class RoomPage extends Component
     public bool $available = false;
     public float $totalPrice = 0;
     public int $days = 0;
+
+    public int $shownComments = 10;
 
     protected $rules = [
         'dateFrom' => 'required|date|after:yesterday',
@@ -62,6 +64,11 @@ class RoomPage extends Component
         ]);
 
         redirect("/profile", ["message" => "Pokój zostal zarezerwowany"]);
+    }
+
+    public function showMoreComments() : void
+    {
+        $this->shownComments += 10;
     }
 
     public function updateAvailable(): void

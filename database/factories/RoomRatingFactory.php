@@ -16,6 +16,7 @@ class RoomRatingFactory extends Factory
             'room_id' => $this->faker->numberBetween(1, 15),
             'user_id' => $this->faker->numberBetween(1, 100),
             'value' => 0.5 * $this->faker->numberBetween(1, 10),
+            'comment' => $this->faker->text(200),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

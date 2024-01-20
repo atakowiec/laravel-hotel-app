@@ -133,3 +133,55 @@
         }
     }
 }
+
+
+.ratings-box {
+    margin-top: 30px;
+
+    .show-more button {
+        background-color: #fff;
+        border-radius: 10px !important;
+        border: 1px solid #ff5a5f;
+        color: #ff5a5f;
+        font-weight: bold;
+        padding: 10px 20px;
+        margin: 0 auto;
+        display: block;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+            background-color: #ff5a5f;
+            color: #fff;
+        }
+    }
+
+    .rating {
+        display: flex;
+        margin-bottom: 10px;
+        flex-direction: column;
+        background-color: #f3f3f3;
+        border-radius: 10px !important;
+        padding: 10px;
+        border: 1px solid #dfdfdf;
+
+        .user {
+            .name {
+                font-weight: bold;
+                margin-right: 10px;
+            }
+
+            .date {
+                color: #999;
+                font-size: 0.8rem;
+            }
+        }
+
+        .stars {
+        }
+
+        .comment {
+            margin-top: 10px;
+        }
+    }
+}

@@ -22,10 +22,14 @@ class Room extends Model
         'photo',
     ];
 
-    public
-    function tags(): BelongsToMany
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(AvailableTags::class, 'room_tags', 'room_id', 'tag_id');
+    }
+
+    public function ratings() : HasMany
+    {
+        return $this->hasMany(RoomRating::class);
     }
 
     public function reservations(): HasMany
@@ -33,8 +37,7 @@ class Room extends Model
         return $this->hasMany(Reservation::class);
     }
 
-    public
-    static function getTags($id): array
+    public static function getTags($id): array
     {
         $res = AvailableTags::select('available_tags.name')
             ->join('room_tags', 'room_tags.tag_id', '=', 'available_tags.id')
@@ -50,8 +53,7 @@ class Room extends Model
         return $tags;
     }
 
-    public
-    static function getRating($id): array
+    public static function getRating($id): array
     {
         $ratings = RoomRating::where('room_id', $id)->get();
         $sum = 0;
@@ -63,6 +65,11 @@ class Room extends Model
             "average" => $count > 0 ? $sum / $count : 0,
             "count" => $count
         ];
+    }
+
+    public function rating() : HasMany
+    {
+        return $this->hasMany(RoomRating::class);
     }
 
     public
