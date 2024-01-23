@@ -49,6 +49,13 @@
             label {
                 display: flex;
                 align-items: center;
+
+
+                &:last-child {
+                    input {
+                        margin-bottom: 0 !important;
+                    }
+                }
             }
 
             input {

@@ -111,6 +111,8 @@ class Profile extends Component
         $this->oldPassword = '';
         $this->newPassword = '';
         $this->newPasswordConfirmation = '';
+
+        $this->hideFloatingComponent('change_password');
     }
 
     public function updated($propertyName): void

@@ -30,7 +30,7 @@ trait WithFloatingComponent
         return $this->params[$id] ?? [];
     }
 
-    public function getParam($id, $index)
+    public function getParam($id, $index = 0)
     {
         return $this->params[$id][$index] ?? null;
     }

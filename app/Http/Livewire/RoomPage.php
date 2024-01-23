@@ -4,13 +4,17 @@ namespace App\Http\Livewire;
 
 use App\Models\Reservation;
 use App\Models\Room;
+use App\Models\RoomRating;
+use App\Traits\WithFlashMessage;
 use App\Traits\WithFloatingComponent;
+use App\Traits\WithFloatingConfirmation;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class RoomPage extends Component
 {
-    use WithFloatingComponent;
+    use WithFloatingConfirmation;
+    use WithFlashMessage;
 
     public Room $room;
     public array $tags = [];
@@ -54,7 +58,7 @@ class RoomPage extends Component
     {
         $this->validate();
 
-        $reservation = Reservation::create([
+        Reservation::create([
             'user_id' => auth()->user()->id,
             'room_id' => $this->room->id,
             'date_from' => $this->dateFrom,
@@ -66,7 +70,7 @@ class RoomPage extends Component
         redirect("/profile", ["message" => "Pokój zostal zarezerwowany"]);
     }
 
-    public function showMoreComments() : void
+    public function showMoreComments(): void
     {
         $this->shownComments += 10;
     }
@@ -79,9 +83,9 @@ class RoomPage extends Component
         $reservations = Reservation::where('room_id', $this->room->id)
             ->where(function ($query) use ($dateFrom, $dateTo) {
                 $query->orWhere(function ($query) use ($dateFrom, $dateTo) {
-                        $query->where('date_from', '<', $dateFrom)
-                            ->where('date_to', '>', $dateTo);
-                    })
+                    $query->where('date_from', '<', $dateFrom)
+                        ->where('date_to', '>', $dateTo);
+                })
                     ->orWhere(function ($query) use ($dateFrom, $dateTo) {
                         $query->where('date_to', '>', $dateFrom)
                             ->where('date_to', '<', $dateTo);
@@ -115,8 +119,24 @@ class RoomPage extends Component
         $this->updateTotalPrice();
     }
 
+    public function removeReview($id): void
+    {
+        if(!auth()->user()->admin) return;
+
+        RoomRating::find($id)->delete();
+
+        $this->addFlashMessage('Opinia została usunięta');
+        $this->room->refresh();
+    }
+
     public function render(): View
     {
         return view('livewire.room-page');
+    }
+
+    public function onConfirm($id, ...$params): void
+    {
+        if ($id == 'remove_review')
+            $this->removeReview($params[0]);
     }
 }

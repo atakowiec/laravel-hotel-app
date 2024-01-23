@@ -19,7 +19,7 @@ class User extends Authenticatable
         'password',
         'email',
         'register_date',
-        "permission",
+        "admin",
         "phone_number",
         "address_id"
     ];

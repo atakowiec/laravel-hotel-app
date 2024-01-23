@@ -20,6 +20,10 @@
             $isAnyComment = true;
         }
     }
+
+    $reviewToRemove = \App\Models\RoomRating::find($this->getParam("remove_review"));
+    $reviewNickname = $reviewToRemove != null ? $reviewToRemove->user->nickname : "";
+
 @endphp
 
 @php($valid = $this->getErrorBag()->isEmpty())
@@ -63,14 +67,17 @@
                     </div>
                 </div>
                 <div class="book-button">
-                    <button @if(!$valid || !$available) disabled @else wire:click="showFloatingComponent('book-room')"
+                    <button @if(!$valid || !$available || !auth()->check()) disabled
+                            @else wire:click="showFloatingComponent('book-room')"
                             @endif class="submit">
                         <span wire:loading.class.remove="d-none" class="d-none d-flex">
                             <x-loading-animation size="sm"/>
                         </span>
                         <span wire:loading.remove>
                         @if($valid)
-                                @if($available)
+                                @if(!auth()->check())
+                                    Zaloguj się aby zarezerwować
+                                @elseif($available)
                                     Zarezerwuj za {{ $totalPrice }} zł
                                 @else
                                     Termin zajęty
@@ -92,12 +99,21 @@
     </div>
     @if($isAnyComment)
         <div class="col-12 ratings-box">
-            <h4>Twoja opinia</h4>
             @if($userComment != null)
+                <h4>Twoja opinia</h4>
                 <div class="rating">
                     <div class="user">
-                        <div class="name">{{ $userComment->user->nickname }}</div>
-                        <div class="date">{{ $userComment->created_at }}</div>
+                        <div>
+                            <div class="name">{{ $userComment->user->nickname }}</div>
+                            <div class="date">{{ $userComment->created_at }}</div>
+                        </div>
+                        @can("admin", Auth::user())
+                            <div>
+                                <button wire:click="showFloatingComponent('remove_review', {{ $userComment->id }})">
+                                    Usun
+                                </button>
+                            </div>
+                        @endcan
                     </div>
                     <div class="stars">
                         <x-rating-stars :rating="$userComment->value"/>
@@ -120,8 +136,17 @@
                 @if($rate->comment != null)
                     <div class="rating">
                         <div class="user">
-                            <div class="name">{{ $rate->user->nickname }}</div>
-                            <div class="date">{{ $rate->created_at }}</div>
+                            <div>
+                                <div class="name">{{ $rate->user->nickname }}</div>
+                                <div class="date">{{ $rate->created_at }}</div>
+                            </div>
+                            @can("admin", Auth::user())
+                                <div>
+                                    <button wire:click="showFloatingComponent('remove_review', {{ $rate->id }})">
+                                        Usun
+                                    </button>
+                                </div>
+                            @endcan
                         </div>
                         <div class="stars">
                             <x-rating-stars :rating="$rate->value"/>
@@ -141,6 +166,14 @@
             @endif
         </div>
     @endif
+
+    <x-floating-confirmation
+        id="remove_review"
+        title="Usuwanie opinii"
+        message="Czy na pewno chcesz usunąć opinie uzytkownika {{$reviewNickname}}?"
+        acceptText="Usun rezerwacje"
+        cancelText="Nie, nie usuwaj"
+    />
 
     <x-floating-container id="book-room">
         <h1>

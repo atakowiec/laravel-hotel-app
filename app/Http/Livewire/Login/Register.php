@@ -114,7 +114,7 @@ class Register extends Component
             "nickname" => $this->nickname,
             "password" => bcrypt($this->password),
             "email" => $this->email,
-            "permission" => 0,
+            "admin" => 0,
             "phone_number" => $this->getPreparedPhoneNumber(),
             "address_id" => $address->id
         ]);

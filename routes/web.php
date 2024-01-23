@@ -13,13 +13,16 @@ Route::get('/room/{id}', [RoomController::class, 'show'])
     ->name("room");
 
 Route::get('/login', [LoginController::class, 'index'])
-    ->name("login");
+    ->name("login")
+    ->middleware("guest");
 
 Route::get('/register', [LoginController::class, 'create'])
-    ->name("register");
+    ->name("register")
+    ->middleware("guest");
 
 Route::get('/logout', [LoginController::class, 'destroy'])
-    ->name("logout");
+    ->name("logout")
+    ->middleware("auth");
 
 Route::get('/profile', [ProfileController::class, 'index'])
     ->name("profile")
@@ -27,8 +30,8 @@ Route::get('/profile', [ProfileController::class, 'index'])
 
 Route::get('/admin', [AdminController::class, 'index'])
     ->name("admin")
-    ->middleware("auth");
+    ->middleware("admin");
 
 Route::get('/edit-room', [AdminController::class, 'create'])
     ->name("edit-room")
-    ->middleware("auth");
+    ->middleware("admin");

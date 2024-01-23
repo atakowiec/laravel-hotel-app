@@ -166,6 +166,30 @@
         border: 1px solid #dfdfdf;
 
         .user {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            justify-content: space-between;
+
+            button {
+                background-color: #fff;
+                border-radius: 10px !important;
+                border: 1px solid #ff5a5f;
+                color: #ff5a5f;
+                font-weight: bold;
+                padding: 5px 10px;
+                margin-right: 10px;
+                font-size: 1.1rem;
+                transition: all 0.1s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #ff5a5f;
+                    color: #fff;
+                }
+            }
+
             .name {
                 font-weight: bold;
                 margin-right: 10px;

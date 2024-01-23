@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string('nickname', 16)->notnull();
             $table->string('password', 512)->notnull();
             $table->string('email', 128)->nullable();
-            $table->integer('permission')->default(0)->notnull();
+            $table->boolean('admin')->default(0)->notnull();
             $table->string('phone_number', 32)->nullable();
             $table->integer('address_id')->nullable();
             $table->timestamps();
