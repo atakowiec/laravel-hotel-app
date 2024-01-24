@@ -82,13 +82,21 @@
             }
 
             .price {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
                 span {
                     width: 20px;
                     text-align: center;
                 }
 
-                input {
+                label {
                     width: calc(50% - 8px);
+
+                    input {
+                        width: calc(100%);
+                    }
                 }
             }
         }

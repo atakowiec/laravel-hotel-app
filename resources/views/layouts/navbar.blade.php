@@ -48,8 +48,8 @@
                         <a class="nav-link login-link" href="{{ route('login') }}">
                             Zaloguj się
                         </a>
-                        @endauth
                     </div>
+                @endauth
             </div>
         </div>
     </nav>

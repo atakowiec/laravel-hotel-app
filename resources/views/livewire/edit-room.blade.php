@@ -30,8 +30,9 @@
         <x-input-box label="Liczba osob" id="roomCapacity" class="col-6" type="number"/>
         <x-input-box label="Powierzchnia" id="roomArea" class="col-6" type="number"/>
         <x-input-box label="Cena za noc" id="roomPrice" type="number"/>
-        <x-input-box label="Pozycja X" id="roomXPos" class="col-6" type="number"/>
-        <x-input-box label="Pozycja Z" id="roomZPos" class="col-6" type="number"/>
+        <x-input-box label="Pozycja X" id="roomXPos" class="col-4" type="number"/>
+        <x-input-box label="Pozycja Y" id="roomYPos" class="col-4" type="number"/>
+        <x-input-box label="Pozycja Z" id="roomZPos" class="col-4" type="number"/>
         <div class="tags-box">
             <h3>
                 Wybierz tagi

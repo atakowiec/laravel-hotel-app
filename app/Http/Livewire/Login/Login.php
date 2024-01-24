@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Login;
 
 use App\Traits\WithInputErrorClass;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Login extends Component
@@ -35,7 +35,7 @@ class Login extends Component
         if (auth()->attempt(['email' => $this->email, "password" => $this->password])) {
             request()->session()->regenerate();
 
-            redirect("/")->with("message", "Zalogowano pomyślnie");
+            redirect("/")->with(["message" => "Zalogowano pomyślnie"]);
             return;
         }
 

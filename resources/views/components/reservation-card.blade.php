@@ -36,7 +36,7 @@
                 Dodaj opinie
             </button>
         @endif
-        @if($reviewed)
+        @if($reviewed && !$future)
             Opinia dodana
         @endif
     </div>

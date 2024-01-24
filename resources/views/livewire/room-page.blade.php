@@ -38,7 +38,7 @@
             <x-rating-stars :room_id="$room->id"/>
             <div class="details">
                 {{$room->capacity}}-osobowy, {{$room->area}}m<sup>2</sup>,
-                x={{$room->x_pos}}, z={{$room->z_pos}} ({{round($room->distance)}}m. od wejscia)
+                x={{$room->x_pos}}, y={{$room->y_pos}}, z={{$room->z_pos}} ({{round($room->distance)}}m. od wejscia)
             </div>
         </div>
         <div class="row">
@@ -67,6 +67,11 @@
                     </div>
                 </div>
                 <div class="book-button">
+                    @if(auth()->check())
+                        <button wire:click="teleport" class="mb-2" style="background-color: #cccccc; color: #212121">
+                            Teleport
+                        </button>
+                    @endif
                     <button @if(!$valid || !$available || !auth()->check()) disabled
                             @else wire:click="showFloatingComponent('book-room')"
                             @endif class="submit">

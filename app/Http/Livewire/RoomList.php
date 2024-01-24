@@ -5,16 +5,15 @@ namespace App\Http\Livewire;
 use App\Models\AvailableTags;
 use App\Models\Room;
 use App\Models\RoomTags;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
 use Livewire\Component;
 
 class RoomList extends Component
 {
     public static int $PER_PAGE = 16;
 
-    public Room $model;
     public Collection $rooms;
 
     protected $messages = [
@@ -45,20 +44,17 @@ class RoomList extends Component
         "page" => ["except" => 1],
     ];
 
-    protected function rules(): array
-    {
-        return [
+    protected array $rules = [
             "tag" => ["array"],
             "tag.*" => ["integer"],
             "dateFrom" => ["date", "before:dateTo", "after:yesterday"],
             "dateTo" => ["date", "after:yesterday"],
             "people" => ["integer", "min:1"],
-            "minPrice" => ["integer", "min:0"],
-            "maxPrice" => ["integer", "min:0", "gte:minPrice"],
+            "minPrice" => ["numeric", "min:0"],
+            "maxPrice" => ["numeric", "min:0", "gte:minPrice"],
             "distance" => ["integer", "min:-1"],
             "sort" => ["string", "in:price:asc,price:desc,distance:asc,distance:desc,area:asc,area:desc,reservations:asc,reservations:desc"],
         ];
-    }
 
     public array $tag = [];
     public string $dateFrom;
@@ -74,13 +70,12 @@ class RoomList extends Component
     public function __construct()
     {
         parent::__construct();
-        $this->model = new Room();
         $this->rooms = new Collection();
 
         $this->dateFrom = date("Y-m-d");
         $this->dateTo = date("Y-m-d", strtotime("+1 day"));
-        $this->minPrice = floor($this->model->min("price"));
-        $this->maxPrice = ceil($this->model->max("price"));
+        $this->minPrice = floor(Room::min("price"));
+        $this->maxPrice = ceil(Room::max("price"));
     }
 
     public function mount(): void
@@ -126,8 +121,8 @@ class RoomList extends Component
     {
         $this->validate();
 
-        $this->rooms = $this->model
-            ->select('rooms.*')
+        $this->rooms = Room::
+            select('rooms.*')
             ->selectRaw(DB::raw("(SELECT count(*) FROM reservations WHERE reservations.room_id = rooms.id) as reservations"))
             ->filter($this->getDataArray())
             ->groupBy('rooms.id')
@@ -159,8 +154,16 @@ class RoomList extends Component
             $tag->count = $tagsCounts[$tag->name] ?? 0;
             return $tag;
         });
-        $tags = $tags->sortByDesc('count');
-        return $tags->values()->all();
+
+        $selected = $tags->filter(function ($tag) {
+            return in_array($tag->id, $this->tag);
+        })->sortByDesc('count');
+
+        $notSelected = $tags->filter(function ($tag) {
+            return !in_array($tag->id, $this->tag);
+        })->sortByDesc('count');
+
+        return $selected->merge($notSelected)->values()->all();
     }
 
     public function updatedDateFrom(): void

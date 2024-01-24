@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\PreviewRequest;
 use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\RoomRating;
@@ -83,15 +84,15 @@ class RoomPage extends Component
         $reservations = Reservation::where('room_id', $this->room->id)
             ->where(function ($query) use ($dateFrom, $dateTo) {
                 $query->orWhere(function ($query) use ($dateFrom, $dateTo) {
-                    $query->where('date_from', '<', $dateFrom)
-                        ->where('date_to', '>', $dateTo);
+                    $query->where('date_from', '<=', $dateFrom)
+                        ->where('date_to', '>=', $dateTo);
                 })
                     ->orWhere(function ($query) use ($dateFrom, $dateTo) {
                         $query->where('date_to', '>', $dateFrom)
-                            ->where('date_to', '<', $dateTo);
+                            ->where('date_to', '<=', $dateTo);
                     })
                     ->orWhere(function ($query) use ($dateFrom, $dateTo) {
-                        $query->where('date_from', '>', $dateFrom)
+                        $query->where('date_from', '>=', $dateFrom)
                             ->where('date_from', '<', $dateTo);
                     });
             })
@@ -138,5 +139,19 @@ class RoomPage extends Component
     {
         if ($id == 'remove_review')
             $this->removeReview($params[0]);
+    }
+
+    public function teleport() : void
+    {
+        PreviewRequest::select('id')
+            ->where('user_id', auth()->user()->id)
+            ->delete();
+
+        PreviewRequest::create([
+            'user_id' => auth()->user()->id,
+            'room_id' => $this->room->id,
+        ]);
+
+        $this->addFlashMessage('Zgłoszenie zostało wysłane');
     }
 }

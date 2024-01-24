@@ -17,6 +17,7 @@ class Room extends Model
         'area',
         'price',
         'x_pos',
+        'y_pos',
         'z_pos',
         'distance',
         'photo',
@@ -110,12 +111,12 @@ class Room extends Model
             $query->where('capacity', '=', $filter['people']);
         }
 
-        if (isset($filter['min-price'])) {
-            $query->where('price', '>=', $filter['min-price']);
+        if (isset($filter['minPrice'])) {
+            $query->where('price', '>=', $filter['minPrice']);
         }
 
-        if (isset($filter['max-price'])) {
-            $query->where('price', '<=', $filter['max-price']);
+        if (isset($filter['maxPrice'])) {
+            $query->where('price', '<=', $filter['maxPrice']);
         }
 
         if (isset($filter['distance']) && $filter['distance'] > 0) {

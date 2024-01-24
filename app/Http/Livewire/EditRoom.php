@@ -30,6 +30,7 @@ class EditRoom extends Component
     public string $roomArea = "";
     public string $roomPrice = "";
     public string $roomXPos = "";
+    public string $roomYPos = "";
     public string $roomZPos = "";
     public array $roomTags = [];
     public string $initialPhoto = "";
@@ -99,6 +100,7 @@ class EditRoom extends Component
         $this->roomArea = $room->area;
         $this->roomPrice = $room->price;
         $this->roomXPos = $room->x_pos;
+        $this->roomYPos = $room->y_pos;
         $this->roomZPos = $room->z_pos;
         $this->roomTags = $room->tags()->pluck('available_tags.id')->toArray();
         $this->initialPhoto = $room->photo;
@@ -128,6 +130,7 @@ class EditRoom extends Component
         $room->area = $this->roomArea;
         $room->price = $this->roomPrice;
         $room->x_pos = $this->roomXPos;
+        $room->y_pos = $this->roomYPos;
         $room->z_pos = $this->roomZPos;
         $room->save();
 

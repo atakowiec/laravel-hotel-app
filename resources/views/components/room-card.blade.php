@@ -37,7 +37,7 @@
                     <span>{{ $room->area }}m<sup>2</sup></span>
                 </div>
                 <div class="location">
-                    Lokalizacja: x={{ $room->x_pos }}, z={{ $room->z_pos }} ({{ number_format($room->distance) }}m. od
+                    Lokalizacja: x={{ $room->x_pos }}, y={{ $room->y_pos }}, z={{ $room->z_pos }} ({{ number_format($room->distance) }}m. od
                     wejścia)
                 </div>
             </div>

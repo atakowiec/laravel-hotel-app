@@ -1,6 +1,6 @@
 @php
-    $max_price = ceil($this->model->max('price'));
-    $min_price = floor($this->model->min('price'));
+    $max_price = ceil(\App\Models\Room::max('price'));
+    $min_price = floor(\App\Models\Room::min('price'));
 @endphp
 @section('title', "Strona głowna")
 
@@ -48,7 +48,9 @@
                            placeholder="od"
                            wire:model.debounce.200ms="minPrice"
                            name="min-price">
-                    <span> - </span>
+                </label>
+                <span> - </span>
+                <label>
                     <input type="number"
                            min="{{ $min_price }}"
                            max="{{ $max_price }}"
@@ -56,13 +58,13 @@
                            wire:model.debounce.200ms="maxPrice"
                            name="max-price">
                 </label>
+            </div>
                 @error('minPrice')
                 <div class="error">{{ $message }}</div>
                 @enderror
                 @error('maxPrice')
                 <div class="error">{{ $message }}</div>
                 @enderror
-            </div>
         </div>
         <div class="box">
             <h5>Odległość</h5>
@@ -172,12 +174,12 @@
         <div class="pagination-box">
             <form class="buttons-box" wire:submit.prevent="$set('page', page)">
                 <button onclick="changePage(-1)" type="button" id="btn1">
-                    <
+                    &lt;
                 </button>
                 <label for="page-value"></label>
-                <input class="page-value" id="page-value" name="page-value" value="{{$this->page}}"/>
+                <input class="page-value" id="page-value" name="page-value" value="{{$this->page}}">
                 <button onclick="changePage(1)" type="button" id="btn2">
-                    >
+                    &gt;
                 </button>
                 <button class="search" id="btn3">
                     Szukaj
@@ -190,7 +192,8 @@
                 </span> do
                 <span>
                 {{ min($rooms->count(), max(0, $this->page) * \App\Http\Livewire\RoomList::$PER_PAGE) }}
-                </span> z
+                </span>
+                z
                 <span>
                 {{ max(0, $rooms->count()) }}
                 </span> wyników
