@@ -106,32 +106,34 @@
     />
 
     <x-floating-container id="review" class="write-review-box">
-        <h1>Dodaj opinie</h1>
-        <h4>{{ $reservation->room->name }}</h4>
-        <div class="stars">
-            @for($i = 1; $i<=5; $i+=1)
-                <div class="star" wire:click="$set('rating', {{$i}})">
-                    <img src="{{ $i <= $rating ? asset("images/full-star.png") : asset("images/empty-star.png") }}"
-                         alt="star">
-                </div>
-            @endfor
-        </div>
-        @error('rating')
+        @isset($reservation)
+            <h1>Dodaj opinie</h1>
+            <h4>{{ $reservation->room->name }}</h4>
+            <div class="stars">
+                @for($i = 1; $i<=5; $i+=1)
+                    <div class="star" wire:click="$set('rating', {{$i}})">
+                        <img src="{{ $i <= $rating ? asset("images/full-star.png") : asset("images/empty-star.png") }}"
+                             alt="star">
+                    </div>
+                @endfor
+            </div>
+            @error('rating')
             <span class="error">{{ $message }}</span>
-        @enderror
-        <div class="input-box">
-            <label for="review-content">Opinia</label>
-            <textarea id="review-content" wire:model.debounce.300ms="comment"></textarea>
-            @error('content') <span class="error">{{ $message }}</span> @enderror
-        </div>
-        @error('comment')
+            @enderror
+            <div class="input-box">
+                <label for="review-content">Opinia</label>
+                <textarea id="review-content" wire:model.debounce.300ms="comment"></textarea>
+                @error('content') <span class="error">{{ $message }}</span> @enderror
+            </div>
+            @error('comment')
             <span class="error">{{ $message }}</span>
-        @enderror
-        <div class="button-box">
-            <button wire:click="addReview">
-                Dodaj opinię
-            </button>
-        </div>
+            @enderror
+            <div class="button-box">
+                <button wire:click="addReview">
+                    Dodaj opinię
+                </button>
+            </div>
+        @endisset
     </x-floating-container>
 
     <x-floating-container id="change_password">
