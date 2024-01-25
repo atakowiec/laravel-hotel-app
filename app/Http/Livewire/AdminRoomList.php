@@ -57,6 +57,11 @@ class AdminRoomList extends Component
 
     public function deleteRoom($id): void
     {
+        if(!auth()?->user()?->admin) {
+            $this->addFlashMessage('Nie masz uprawnień do wykonania tej akcji');
+            return;
+        }
+
         // first delete each room tag
         $roomTags = RoomTags::where('room_id', $id)->delete();
 

@@ -58,6 +58,11 @@ class Profile extends Component
 
     public function cancelReservation($reservationId): void
     {
+        if(!auth()->check()) {
+            $this->addFlashMessage('Musisz być zalogowany, aby anulować rezerwację');
+            return;
+        }
+
         $reservation = Reservation::find($reservationId);
         if (!$reservation || $reservation->cancelled) {
             return;
@@ -96,6 +101,11 @@ class Profile extends Component
 
     public function changePassword(): void
     {
+        if(!auth()->check()) {
+            $this->addFlashMessage('Musisz być zalogowany, aby zmienić hasło');
+            return;
+        }
+
         $this->validate();
 
         if (!auth()->attempt(['email' => auth()->user()->email, 'password' => $this->oldPassword])) {
@@ -135,6 +145,11 @@ class Profile extends Component
 
     private function removeAccount(): void
     {
+        if(!auth()->check()) {
+            $this->addFlashMessage('Musisz być zalogowany, aby usunąć konto');
+            return;
+        }
+
         $address_id = auth()->user()->address_id;
 
         auth()->user()->delete();
@@ -185,6 +200,11 @@ class Profile extends Component
 
     public function addReview(): void
     {
+        if(!auth()->check()) {
+            $this->addFlashMessage('Musisz być zalogowany, aby dodać opinię');
+            return;
+        }
+
         $this->validate($this->commentRules);
 
         $reservationId = $this->getParam('review', 0);

@@ -59,19 +59,38 @@
                 text-align: center;
             }
 
-            button {
-                background-color: #fff;
-                border-radius: 10px !important;
-                border: 0;
-                color: #ff5a5f;
-                cursor: pointer;
-                font-weight: bold;
-                padding: 10px 20px;
-                width: 100%;
+            .book-button {
+                .teleport-button {
+                    background-color: #ff5a5f;
+                    border: 2px solid #fff;
+                    color: #fff;
+                    font-weight: bold;
 
-                &:disabled {
-                    background-color: #dfdfdf;
-                    color: #aaa;
+                    &:hover {
+                        background-color: #fff;
+                        color: #ff5a5f;
+                    }
+                }
+
+                button {
+                    background-color: #fff;
+                    border-radius: 10px !important;
+                    border: 0;
+                    color: #ff5a5f;
+                    cursor: pointer;
+                    font-weight: bold;
+                    padding: 10px 20px;
+                    width: 100%;
+                    transition: all 0.1s ease-in-out;
+
+                    &:hover {
+                        background-color: #eee;
+                    }
+
+                    &:disabled {
+                        background-color: #dfdfdf;
+                        color: #aaa;
+                    }
                 }
             }
 

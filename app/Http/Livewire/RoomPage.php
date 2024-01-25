@@ -122,7 +122,10 @@ class RoomPage extends Component
 
     public function removeReview($id): void
     {
-        if(!auth()->user()->admin) return;
+        if(!auth()->user()?->admin) {
+            $this->addFlashMessage('Nie masz uprawnień do usunięcia opinii');
+            return;
+        }
 
         RoomRating::find($id)->delete();
 
@@ -143,6 +146,11 @@ class RoomPage extends Component
 
     public function teleport() : void
     {
+        if(!auth()->user()) {
+            $this->addFlashMessage('Musisz byc zalogowany!');
+            return;
+        }
+
         PreviewRequest::select('id')
             ->where('user_id', auth()->user()->id)
             ->delete();

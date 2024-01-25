@@ -108,6 +108,11 @@ class EditRoom extends Component
 
     public function save(): void
     {
+        if(!auth()?->user()?->admin) {
+            $this->addFlashMessage('Nie masz uprawnień do wykonania tej akcji');
+            return;
+        }
+
         if ($this->initialPhoto === "" && $this->roomPhoto === null) {
             $this->validate(array_merge($this->rules, [
                 'roomPhoto' => ['required', 'image', 'max:8192', 'mimes:jpg,jpeg,png'],

@@ -111,11 +111,11 @@ class Room extends Model
             $query->where('capacity', '=', $filter['people']);
         }
 
-        if (isset($filter['minPrice'])) {
+        if (!empty($filter['minPrice'])) {
             $query->where('price', '>=', $filter['minPrice']);
         }
 
-        if (isset($filter['maxPrice'])) {
+        if (!empty($filter['maxPrice'])) {
             $query->where('price', '<=', $filter['maxPrice']);
         }
 

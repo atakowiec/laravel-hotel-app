@@ -68,7 +68,7 @@
                 </div>
                 <div class="book-button">
                     @if(auth()->check())
-                        <button wire:click="teleport" class="mb-2" style="background-color: #cccccc; color: #212121">
+                        <button wire:click="teleport" class="mb-2 teleport-button">
                             Teleport
                         </button>
                     @endif
