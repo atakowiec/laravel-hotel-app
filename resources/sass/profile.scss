@@ -1,288 +1,288 @@
 .profile-box {
-    margin-top: 36px;
+  margin-top: 36px;
 
-    .change-password-box {
-        padding: 20px;
+  .change-password-box {
+    padding: 20px;
+    border-radius: 10px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .button-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+
+      button {
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        background-color: #ff5a5f;
+        color: #fff;
         border-radius: 10px;
-        height: fit-content;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        transition: background-color 0.1s ease-in-out;
+        padding: 10px 20px;
 
-        .button-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-
-            button {
-                border: none;
-                outline: none;
-                font-size: 1rem;
-                background-color: #ff5a5f;
-                color: #fff;
-                border-radius: 10px;
-                transition: background-color 0.1s ease-in-out;
-                padding: 10px 20px;
-
-                &:hover {
-                    background-color: #ff7b7f;
-                }
-            }
+        &:hover {
+          background-color: #ff7b7f;
         }
-
-        .input-box {
-            margin-top: 20px;
-
-            label {
-                font-size: 1rem;
-                color: #333;
-                font-weight: bold;
-            }
-
-            input {
-                border: none;
-                outline: none;
-                background-color: rgba(0, 0, 0, 0.08);
-                border-radius: 10px;
-                padding: 10px;
-                margin-top: 5px;
-                width: 100%;
-                font-size: 1rem;
-                color: #333;
-            }
-        }
+      }
     }
 
-    .left-panel {
-        padding: 20px;
+    .input-box {
+      margin-top: 20px;
+
+      label {
+        font-size: 1rem;
+        color: #333;
+        font-weight: bold;
+      }
+
+      input {
+        border: none;
+        outline: none;
         background-color: rgba(0, 0, 0, 0.08);
         border-radius: 10px;
-        height: fit-content;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        padding: 10px;
+        margin-top: 5px;
+        width: 100%;
+        font-size: 1rem;
+        color: #333;
+      }
+    }
+  }
+
+  .left-panel {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    button {
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      border-radius: 10px;
+      transition: background-color 0.1s ease-in-out;
+      width: 100%;
+      padding: 10px 0;
+      margin-top: 20px;
+
+      &:first-child {
+        background-color: #d4d4d4;
+        color: #333;
+
+        &:hover {
+          background-color: #dcdcdc;
+        }
+      }
+
+      &:last-child {
+        background-color: #ff5a5f;
+        color: #fff;
+
+        &:hover {
+          background-color: #ff7b7f;
+        }
+      }
+    }
+
+    .avatar-box {
+      text-align: center;
+
+      .avatar {
+        width: 100px;
+        border-radius: 50%;
+      }
+    }
+
+    .info-box {
+      margin-top: 20px;
+      text-align: center;
+
+      h4 {
+        margin-top: 10px;
+        color: #333;
+        font-weight: bold;
+        font-size: 0.8rem;
+      }
+
+      .name {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .email {
+        font-size: 1rem;
+        color: #888;
+      }
+
+      .phone-number {
+        font-size: 1rem;
+        color: #888;
+      }
+
+      .address {
+        font-size: 1rem;
+        color: #888;
+      }
+    }
+  }
+
+  .reservations-box {
+    padding-left: 20px;
+
+    h2 {
+      margin-bottom: 8px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+
+      &.no-reservations {
+        font-size: 1rem;
+        font-weight: normal;
+        text-align: center;
+      }
+
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
+    }
+
+    .reservation-card {
+      padding: 10px;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.08);
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 40px;
+      }
+
+      .right-box {
+        text-align: right;
 
         button {
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            border-radius: 10px;
-            transition: background-color 0.1s ease-in-out;
-            width: 100%;
-            padding: 10px 0;
-            margin-top: 20px;
+          border: none;
+          outline: none;
+          font-size: 1rem;
+          background-color: #ff5a5f;
+          color: #fff;
+          border-radius: 10px;
+          transition: background-color 0.1s ease-in-out;
+          padding: 5px 15px;
 
-            &:first-child {
-                background-color: #d4d4d4;
-                color: #333;
+          &:hover {
+            background-color: #ff7b7f;
+          }
+        }
+      }
 
-                &:hover {
-                    background-color: #dcdcdc;
-                }
-            }
-
-            &:last-child {
-                background-color: #ff5a5f;
-                color: #fff;
-
-                &:hover {
-                    background-color: #ff7b7f;
-                }
-            }
+      .info {
+        a {
+          text-decoration: none;
         }
 
-        .avatar-box {
-            text-align: center;
+        h5 {
+          margin-bottom: 5px;
+          font-size: 1.3rem;
+          font-weight: bold;
+          color: #333;
 
-            .avatar {
-                width: 100px;
-                border-radius: 50%;
-            }
+          .id {
+            font-size: 0.8rem;
+            color: #888;
+            font-weight: normal;
+          }
         }
 
-        .info-box {
-            margin-top: 20px;
-            text-align: center;
-
-            h4 {
-                margin-top: 10px;
-                color: #333;
-                font-weight: bold;
-                font-size: 0.8rem;
-            }
-
-            .name {
-                font-size: 1.5rem;
-                font-weight: bold;
-            }
-
-            .email {
-                font-size: 1rem;
-                color: #888;
-            }
-
-            .phone-number {
-                font-size: 1rem;
-                color: #888;
-            }
-
-            .address {
-                font-size: 1rem;
-                color: #888;
-            }
+        .date, .price {
+          font-size: 1rem;
+          color: #888;
         }
+      }
+
+      .room-image {
+        padding: 0;
+
+        img {
+          width: 100%;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 6px;
+          object-position: center;
+        }
+      }
     }
-
-    .reservations-box {
-        padding-left: 20px;
-
-        h2 {
-            margin-bottom: 8px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-
-            &.no-reservations {
-                font-size: 1rem;
-                font-weight: normal;
-                text-align: center;
-            }
-
-            &:not(:first-child) {
-                margin-top: 20px;
-            }
-        }
-
-        .reservation-card {
-            padding: 10px;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.08);
-            margin-bottom: 10px;
-
-            &:last-child {
-                margin-bottom: 40px;
-            }
-
-            .right-box {
-                text-align: right;
-
-                button {
-                    border: none;
-                    outline: none;
-                    font-size: 1rem;
-                    background-color: #ff5a5f;
-                    color: #fff;
-                    border-radius: 10px;
-                    transition: background-color 0.1s ease-in-out;
-                    padding: 5px 15px;
-
-                    &:hover {
-                        background-color: #ff7b7f;
-                    }
-                }
-            }
-
-            .info {
-                a {
-                    text-decoration: none;
-                }
-
-                h5 {
-                    margin-bottom: 5px;
-                    font-size: 1.3rem;
-                    font-weight: bold;
-                    color: #333;
-
-                    .id {
-                        font-size: 0.8rem;
-                        color: #888;
-                        font-weight: normal;
-                    }
-                }
-
-                .date, .price {
-                    font-size: 1rem;
-                    color: #888;
-                }
-            }
-
-            .room-image {
-                padding: 0;
-
-                img {
-                    width: 100%;
-                    height: 150px;
-                    object-fit: cover;
-                    border-radius: 6px;
-                    object-position: center;
-                }
-            }
-        }
-    }
+  }
 }
 
 
 .write-review-box {
-    .stars {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
+  .stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 
-        img {
-            width: 30px;
-            height: 30px;
-            object-fit: cover;
-            object-position: center;
-            margin-right: 5px;
-            cursor: pointer;
-        }
+    img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      object-position: center;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .input-box {
+    margin-top: 20px;
+
+    label {
+      font-size: 1rem;
+      color: #333;
+      font-weight: bold;
     }
 
-    .input-box {
-        margin-top: 20px;
-
-        label {
-            font-size: 1rem;
-            color: #333;
-            font-weight: bold;
-        }
-
-        textarea {
-            border: none;
-            outline: none;
-            background-color: rgba(0, 0, 0, 0.08);
-            border-radius: 10px;
-            padding: 10px;
-            margin-top: 5px;
-            width: 100%;
-            font-size: 1rem;
-            color: #333;
-            resize: none;
-            height: 100px;
-        }
+    textarea {
+      border: none;
+      outline: none;
+      background-color: rgba(0, 0, 0, 0.08);
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 5px;
+      width: 100%;
+      font-size: 1rem;
+      color: #333;
+      resize: none;
+      height: 100px;
     }
+  }
 
-    .button-box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 30px;
+  .button-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
 
-        button {
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            background-color: #ff5a5f;
-            color: #fff;
-            border-radius: 10px;
-            transition: background-color 0.1s ease-in-out;
-            padding: 10px 20px;
+    button {
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background-color: #ff5a5f;
+      color: #fff;
+      border-radius: 10px;
+      transition: background-color 0.1s ease-in-out;
+      padding: 10px 20px;
 
-            &:hover {
-                background-color: #ff7b7f;
-            }
-        }
+      &:hover {
+        background-color: #ff7b7f;
+      }
     }
+  }
 }

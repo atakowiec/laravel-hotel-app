@@ -1,0 +1,37 @@
+services:
+  hotel_database:
+    image: mysql:8.0
+    container_name: hotel_database
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "!123"
+      MYSQL_DATABASE: hotel_db
+      MYSQL_USER: hotel
+      MYSQL_PASSWORD: "!123"
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data3:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: hotel-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: hotel_database
+      UPLOAD_LIMIT: 100M
+    ports:
+      - "8080:80"
+    depends_on:
+      - hotel_database
+
+  hotel_app:
+    image: laravel-hotel-app
+    container_name: hotel_app
+    ports:
+      - "80:80"
+    depends_on:
+      - hotel_database
+
+volumes:
+  db_data3:

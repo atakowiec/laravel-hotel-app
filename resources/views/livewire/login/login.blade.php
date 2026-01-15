@@ -1,7 +1,7 @@
 @section('title', "Logowanie")
 
 @push("css")
-    @vite(["/resources/sass/login.scss"])
+    @vite(["resources/sass/login.scss"])
 @endpush
 
 @php($valid = $this->getErrorBag()->isEmpty() && !empty($email) && !empty($password))

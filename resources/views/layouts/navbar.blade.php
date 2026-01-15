@@ -26,6 +26,18 @@
                         </li>
                     @endcan
                 </ul>
+                <div class="contast-button-box">
+                    <div class="access-button contrast-normal">A</div>
+                    <div class="access-button contrast-high">A</div>
+                    <div class="access-button font-0" onclick="setFontSize(16)">A</div>
+                    <div class="access-button font-1" onclick="setFontSize(18)">A</div>
+                    <div class="access-button font-2" onclick="setFontSize(20)">A</div>
+                    <script>
+                        function setFontSize(size) {
+                            document.documentElement.style.fontSize = size + 'px';
+                        }
+                    </script>
+                </div>
                 @auth
                     <div class="nav-item pe-0 pe-md-2">
                         <a class="nav-link" href="{{ route('logout') }}">

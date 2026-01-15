@@ -1,7 +1,7 @@
 @section('title', "Rejestracja")
 
 @push("css")
-    @vite(["/resources/sass/login.scss"])
+    @vite(["resources/sass/login.scss"])
 @endpush
 
 @php($valid = (!$nextStage && $this->getErrorBag()->isEmpty() && !empty($email) && !empty($password) && !empty($nickname) && !empty($password_confirmation) && $terms == true)

@@ -78,7 +78,7 @@ class Profile extends Component
     public function mount(): void
     {
         $all = Reservation::where('user_id', auth()->user()->id)
-            ->orderBy('date_from')->get();
+            ->inRandomOrder()->get();
 
         $today = now()->format('Y-m-d');
         $this->hasAnyReservations = $all->count() > 0;

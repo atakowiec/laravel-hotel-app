@@ -21,8 +21,8 @@ class Register extends Component
     public string $city;
     public string $zip_code;
     public string $street;
-    public string $building_number;
-    public string $flat_number;
+    public string $building_number = "";
+    public string $flat_number = "";
 
     public bool $nextStage = false;
 
