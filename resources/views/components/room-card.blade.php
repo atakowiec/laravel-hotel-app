@@ -25,17 +25,20 @@
     <div class="info">
         <div class="info-content">
             <div>
+                <h3>
+                    <a href="/room/{{ $room->id }}">{{ $room->name }}</a>
+                    <span class="room-id">#{{ $room->id }}</span>
+                </h3>
                 <div>
-                    <a href="/room/{{ $room->id }}" style="color:black;text-decoration:none;">{{ $room->name }}</a>
-                    <span class="room-id" style="color: #aaa;">#{{ $room->id }}</span>
+                    <x-rating-stars room_id="{{ $room->id }}"/>
                 </div>
                 <div class="capacity">
                     <span>Dla {{ $room->capacity }} {{ $room->capacity == 1 ? "osoby" : "osób" }},</span>
+                    <span>{{ $room->area }}m<sup>2</sup></span>
                 </div>
                 <div class="location">
-                    <span>{{ $room->area }}m<sup>2</sup></span>,
                     Lokalizacja: x={{ $room->x_pos }}, y={{ $room->y_pos }}, z={{ $room->z_pos }} ({{ number_format($room->distance) }}m. od
-                    wejścia), Ocena. 4.36
+                    wejścia)
                 </div>
             </div>
             @php
@@ -71,7 +74,7 @@
                         Szczególy
                     </div>
                 </a>
-                <span>{{ number_format($room->price, 2) }} <span style="font-weight: normal; font-size: 0.8rem; color: #999;">zł / noc</span></span>
+                <span>{{ number_format($room->price, 2) }} zł / noc</span>
                 <span class="reservation-count">
                 {{ $room->reservations }} {{ $reservationMessage }}
                 </span>

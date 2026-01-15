@@ -5,7 +5,7 @@
 @endpush
 
 
-<div class="edit-room col-12 col-md-7 col-xxl-7 mx-auto px-3 px-md-0">
+<div class="edit-room col-12 col-md-7 col-xxl-4 mx-auto px-3 px-md-0">
     <h1 class="text-center">
         Edytuj pokój
     </h1>
@@ -13,9 +13,9 @@
         <div class="photo-box">
             <label for="roomPhoto" class="col-12 mx-auto d-block">
                 @if($this->isCorrectPhoto())
-                    <img src="{{ $roomPhoto->temporaryUrl() }}" alt="Zdjęcie pokoju" style="height: 250px">
+                    <img src="{{ $roomPhoto->temporaryUrl() }}" alt="Zdjęcie pokoju">
                 @else
-                    <img src="{{ empty($initialPhoto) ? asset("images/room.jpg") : asset("storage/rooms/$initialPhoto") }}" alt="Zdjęcie pokoju" style="height: 250px">
+                    <img src="{{ empty($initialPhoto) ? asset("images/room.jpg") : asset("storage/rooms/$initialPhoto") }}" alt="Zdjęcie pokoju">
                 @endif
             </label>
             <input type="file" id="roomPhoto"
@@ -44,7 +44,7 @@
                        class="tag-checkbox"
                        value="{{$tag->id}}"
                        id='{{ $tag->id }}'/>
-                <label for='{{ $tag->id }}'>{{$tag->name}}, </label>
+                <label for='{{ $tag->id }}'>{{$tag->name}}</label>
             @endforeach
         </div>
 

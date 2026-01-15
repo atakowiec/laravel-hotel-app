@@ -31,16 +31,14 @@
 <div class="row col-12 col-md-10 col-xxl-8 mx-auto room-box">
     <div class="col-12 info-box">
         <div class="info">
-            <h1 style="font-size: 3rem">
+            <h3>
                 {{ $room->name }}
                 <span class="id">#{{ $room->id }}</span>
-            </h1>
-            {{--            <x-rating-stars :room_id="$room->id"/>--}}
-            <div>
-
-            </div>
-            <div class="col-12">
-                Posiada: {{ implode(", ", $tags) }} - 3.8 (42 opinii)
+            </h3>
+            <x-rating-stars :room_id="$room->id"/>
+            <div class="details">
+                {{$room->capacity}}-osobowy, {{$room->area}}m<sup>2</sup>,
+                x={{$room->x_pos}}, y={{$room->y_pos}}, z={{$room->z_pos}} ({{round($room->distance)}}m. od wejscia)
             </div>
         </div>
         <div class="row">
@@ -48,23 +46,6 @@
                 <img class="room-image" src="{{ asset("storage/rooms/$room->photo") }}" alt="room"/>
             </div>
             <div class="col-3 book-box">
-                <h4>Szczegóły</h4>
-                <div style="color: white">
-                    <ul>
-                        <li>
-                            2-osobowy,
-                        </li>
-                        <li>
-                            25m2,
-                        </li>
-                        <li>
-                            x=-101, y=85, z=-44
-                        </li>
-                        <li>
-                            (139m. od wejscia)
-                        </li>
-                    </ul>
-                </div>
                 <div class="box">
                     <h4>Zarezerwuj</h4>
                     <label>
@@ -86,6 +67,11 @@
                     </div>
                 </div>
                 <div class="book-button">
+                    @if(auth()->check())
+                        <button wire:click="teleport" class="mb-2 teleport-button">
+                            Teleport
+                        </button>
+                    @endif
                     <button @if(!$valid || !$available || !auth()->check()) disabled
                             @else wire:click="showFloatingComponent('book-room')"
                             @endif class="submit">
@@ -109,6 +95,12 @@
                 </div>
             </div>
         </div>
+    </div>
+    <h4>Udogodnienia</h4>
+    <div class="col-12 tags-box">
+        @foreach($tags as $tag)
+            <div class="tag">{{ $tag }}</div>
+        @endforeach
     </div>
     @if($isAnyComment)
         <div class="col-12 ratings-box">
