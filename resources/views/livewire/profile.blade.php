@@ -59,30 +59,18 @@
             </h2>
         @endif
         @if($currentReservations->count() > 0)
-            <h2>
-                Aktualne rezerwacje
-            </h2>
             @foreach($currentReservations as $reservation)
                 <x-reservation-card :reservation="$reservation"/>
             @endforeach
         @elseif($nextReservation != null)
-            <h2>
-                Następna rezerwacja
-            </h2>
             <x-reservation-card :reservation="$nextReservation"/>
         @endif
         @if($this->futureReservations->count() > 0)
-            <h2>
-                Nadchodzące rezerwacje
-            </h2>
             @foreach($futureReservations as $reservation)
                 <x-reservation-card :reservation="$reservation"/>
             @endforeach
         @endif
         @if($pastReservations->count() > 0)
-            <h2>
-                Poprzednie rezerwacji
-            </h2>
             @foreach($pastReservations as $reservation)
                 <x-reservation-card :reservation="$reservation"/>
             @endforeach

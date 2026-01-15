@@ -3,22 +3,24 @@
 @php($reviewed = $reservation->getUserReview() != null)
 @php($review = $reservation->getUserReview())
 
-<div class="reservation-card col-12 row">
+<div class="reservation-card col-12 row"  style="color: #999 !important;">
     <div class="room-image col-3">
         <img src="{{ asset("storage/rooms/{$reservation->room->photo}") }}" alt="room">
     </div>
     <div class="info col-6">
         <a href="{{route('room', ['id' => $reservation->room->id])}}">
-            <h5>
+            <div style="color: #999 !important;">
                 {{$reservation->room->name}}
                 <span class="id">#{{$reservation->room->id}}</span>
-            </h5>
+            </div>
         </a>
-        <x-rating-stars :room_id="$reservation->room_id"/>
-        <div class="date">
+        <div class="date"  style="color: #999 !important;">
+            Ocena: 3.90 (10 opinii)
+        </div>
+        <div class="date"  style="color: #999 !important;">
             {{$reservation->date_from}} - {{$reservation->date_to}}
         </div>
-        <div class="price">
+        <div class="price"  style="color: #999 !important;">
             Suma: {{$reservation->total_cost}} zł
         </div>
     </div>
