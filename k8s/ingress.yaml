@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hotel-ingress
+  namespace: hotel-app
+spec:
+  rules:
+    - host: hotel.cieszczyk.pl
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hotel-app
+                port:
+                  number: 80
+    - host: database.cieszczyk.pl
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: phpmyadmin
+                port:
+                  number: 80
