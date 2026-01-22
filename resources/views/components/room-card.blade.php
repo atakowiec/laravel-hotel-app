@@ -25,10 +25,10 @@
     <div class="info">
         <div class="info-content">
             <div>
-                <h3>
+                <h4>
                     <a href="/room/{{ $room->id }}">{{ $room->name }}</a>
                     <span class="room-id">#{{ $room->id }}</span>
-                </h3>
+                </h4>
                 <div>
                     <x-rating-stars room_id="{{ $room->id }}"/>
                 </div>
@@ -37,7 +37,8 @@
                     <span>{{ $room->area }}m<sup>2</sup></span>
                 </div>
                 <div class="location">
-                    Lokalizacja: x={{ $room->x_pos }}, y={{ $room->y_pos }}, z={{ $room->z_pos }} ({{ number_format($room->distance) }}m. od
+                    Lokalizacja: x={{ $room->x_pos }}, y={{ $room->y_pos }}, z={{ $room->z_pos }}
+                    ({{ number_format($room->distance) }}m. od
                     wejścia)
                 </div>
             </div>
@@ -69,11 +70,9 @@
             </div>
         @else
             <div class="price">
-                <a href="/room/{{ $room->id }}">
-                    <div class="button">
-                        Szczególy
-                    </div>
-                </a>
+                <button class="button" onclick="window.location.href='/room/{{ $room->id }}'">
+                    Szczegóły
+                </button>
                 <span>{{ number_format($room->price, 2) }} zł / noc</span>
                 <span class="reservation-count">
                 {{ $room->reservations }} {{ $reservationMessage }}

@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <img src=" {{ asset('images/logo.svg') }}" alt="logo">
+                <img src=" {{ asset('images/logo.svg') }}" alt="hotel">
                 <span class="fw-bold">Hotel</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
@@ -29,9 +29,9 @@
                 <div class="contast-button-box">
                     <div class="access-button contrast-normal">A</div>
                     <div class="access-button contrast-high">A</div>
-                    <div class="access-button font-0" onclick="setFontSize(16)">A</div>
-                    <div class="access-button font-1" onclick="setFontSize(18)">A</div>
-                    <div class="access-button font-2" onclick="setFontSize(20)">A</div>
+                    <div class="access-button font-0">A</div>
+                    <div class="access-button font-1">A</div>
+                    <div class="access-button font-2">A</div>
                     <script>
                         function setFontSize(size) {
                             document.documentElement.style.fontSize = size + 'px';

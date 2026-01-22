@@ -10,7 +10,7 @@
 
 <div class="main row mx-auto col-12 col-md-9">
     <div class="filters col-3">
-        <h3>Termin</h3>
+        <h4>Termin</h4>
         <div class="box">
             <label>
                 <span>Od</span>
@@ -28,12 +28,13 @@
             <span class="error">{{ $message }}</span>
             @enderror
         </div>
-        <h3 class="mt-4">Filtrowanie</h3>
+        <h4 class="mt-4">Filtrowanie</h4>
         <div class="box">
             <h5>Liczba osób</h5>
-            <label>
-                <input type="number" min="1" max="10" name="people" wire:model.debounce.200ms="people">
+            <label for="people" class="d-none">
+                Liczba osób
             </label>
+            <input id="people" type="number" min="1" max="10" name="people" wire:model.debounce.200ms="people">
             @error('people')
             <span class="error">{{ $message }}</span>
             @enderror
@@ -41,89 +42,108 @@
         <div class="box">
             <h5>Cena</h5>
             <div class="price">
-                <label>
-                    <input type="number"
-                           min="{{ $min_price }}"
-                           max="{{ $max_price }}"
-                           placeholder="od"
-                           wire:model.debounce.200ms="minPrice"
-                           name="min-price">
+                <label for="min-price">
+                    Min
                 </label>
+                <input type="number"
+                       id="min-price"
+                       min="{{ $min_price }}"
+                       max="{{ $max_price }}"
+                       placeholder="od"
+                       wire:model.debounce.200ms="minPrice"
+                       name="min-price">
                 <span> - </span>
-                <label>
-                    <input type="number"
-                           min="{{ $min_price }}"
-                           max="{{ $max_price }}"
-                           placeholder="do"
-                           wire:model.debounce.200ms="maxPrice"
-                           name="max-price">
+                <label for="max-price">
+                    Max
                 </label>
+                <input type="number"
+                       id="max-price"
+                       min="{{ $min_price }}"
+                       max="{{ $max_price }}"
+                       placeholder="do"
+                       wire:model.debounce.200ms="maxPrice"
+                       name="max-price">
             </div>
-                @error('minPrice')
-                <div class="error">{{ $message }}</div>
-                @enderror
-                @error('maxPrice')
-                <div class="error">{{ $message }}</div>
-                @enderror
+            @error('minPrice')
+            <div class="error">{{ $message }}</div>
+            @enderror
+            @error('maxPrice')
+            <div class="error">{{ $message }}</div>
+            @enderror
         </div>
         <div class="box">
             <h5>Odległość</h5>
-            <label>
-                <input type="radio" name="distance"
-                       value="20" wire:model="distance">
-                <span>poniżej 20m</span>
-            </label>
-            <label>
-                <input type="radio" name="distance"
-                       value="50" wire:model="distance">
-                <span>poniżej 50m</span>
-            </label>
-            <label>
-                <input type="radio" name="distance"
-                       value="100" wire:model="distance">
-                <span>poniżej 100m</span>
-            </label>
-            <label>
-                <input type="radio" name="distance"
-                       value="200" wire:model="distance">
-                <span>poniżej 200m</span>
-            </label>
-            <label>
-                <input type="radio" name="distance"
-                       value="-1" wire:model="distance">
-                <span>bez znaczenia</span>
-            </label>
+            <fieldset>
+                <legend class="d-none">
+                    Wybór odległości
+                </legend>
+                <label>
+                    <input type="radio" name="distance"
+                           value="20" wire:model="distance">
+                    <span>poniżej 20m</span>
+                </label>
+                <label>
+                    <input type="radio" name="distance"
+                           value="50" wire:model="distance">
+                    <span>poniżej 50m</span>
+                </label>
+                <label>
+                    <input type="radio" name="distance"
+                           value="100" wire:model="distance">
+                    <span>poniżej 100m</span>
+                </label>
+                <label>
+                    <input type="radio" name="distance"
+                           value="200" wire:model="distance">
+                    <span>poniżej 200m</span>
+                </label>
+                <label>
+                    <input type="radio" name="distance"
+                           value="-1" wire:model="distance">
+                    <span>bez znaczenia</span>
+                </label>
+            </fieldset>
         </div>
         <div class="box">
             <h5>Udogodnienia</h5>
-            <div>
-                @php($i = 0)
-                @foreach($this->tags as $tag)
-                    @php($i++)
-                    @if($i == 20)
-            </div>
-            <p onclick="show()" id="button-to-hide">
-                Pokaż pozostałe ({{ count($this->tags) - $i + 1 }})
-            </p>
-            <div id="rest-to-show" class="d-none">
-                @endif
-                <label class="{{$tag->count == 0 ? "inactive" : ""}}">
-                    <input type="checkbox" name="tag[]"
-                           value="{{ $tag->id }}"
-                           {{ in_array($tag->id, $this->tag) ? "checked" : ""}}
-                           wire:change="setTag({{ $tag->id }}, $event.target.checked)">
-                    <span>{{ $tag->name }} ({{ $tag->count }})</span>
-                </label>
-                @endforeach
-            </div>
+            <fieldset>
+                <legend class="d-none">
+                    Udogodnienia
+                </legend>
+                <div>
+                    @php($i = 0)
+                    @foreach($this->tags as $tag)
+                        @php($i++)
+                        @if($i == 20)
+                </div>
+                <div style="text-align:center;">
+                    <button onclick="show()" id="button-to-hide" style="border: none;">
+                        Pokaż pozostałe ({{ count($this->tags) - $i + 1 }})
+                    </button>
+                </div>
+                <div id="rest-to-show" class="d-none">
+                    @endif
+                    <label class="{{$tag->count == 0 ? "inactive" : ""}}">
+                        <input type="checkbox" name="tag[]"
+                               value="{{ $tag->id }}"
+                               {{ in_array($tag->id, $this->tag) ? "checked" : ""}}
+                               wire:change="setTag({{ $tag->id }}, $event.target.checked)">
+                        <span>{{ $tag->name }} ({{ $tag->count }})</span>
+                    </label>
+                    @endforeach
+                </div>
+            </fieldset>
         </div>
     </div>
     <div class="col-9 col-xxl-8">
         <div class="search-result-header-box">
-            <h3>Wyniki wyszukiwania</h3>
+            <h1>Wyniki wyszukiwania</h1>
             <div>
-                <label>
-                    <select name="sort" wire:model="sort">
+                <form>
+                    <label for="sort">
+                        Sortowanie:
+                    </label>
+                    <select id="sort" name="sort" wire:model="sort">
                         <option value="price:desc">
                             Cena - malejąco
                         </option>
@@ -149,7 +169,7 @@
                             Popularność - rosnąco
                         </option>
                     </select>
-                </label>
+                </form>
             </div>
         </div>
         <div class="search-result-box">
@@ -176,7 +196,7 @@
                 <button onclick="changePage(-1)" type="button" id="btn1">
                     &lt;
                 </button>
-                <label for="page-value"></label>
+                <label for="page-value">p.</label>
                 <input class="page-value" id="page-value" name="page-value" value="{{$this->page}}">
                 <button onclick="changePage(1)" type="button" id="btn2">
                     &gt;
